@@ -1,0 +1,227 @@
+@import "bourbon/bourbon";
+
+@include font-face("Prototype", "/static/fonts/Prototype", $file-formats: ttf);
+
+//
+// Cross-browser gradient mixin by Andy Howells.
+// https://gist.github.com/andyunleashed/2700286
+//
+@mixin linear-gradient($fromColor, $toColor, $image: '') {
+    background: $toColor; //Fallback
+    @if str-length($image) > 1 {
+        $image: unquote('#{$image}, ');
+    }
+    background: #{$image}-webkit-gradient(linear, left top, left bottom, from($fromColor), to($toColor)); //Saf4+, Chrome
+    background: #{$image}-webkit-linear-gradient(top, $fromColor, $toColor); //Chrome 10+, Saf5.1+, iOS 5+
+    background: #{$image}-moz-linear-gradient(top, $fromColor, $toColor); //FF3.6
+    background: #{$image}-ms-linear-gradient(top, $fromColor, $toColor); //IE10
+    background: #{$image}-o-linear-gradient(top, $fromColor, $toColor); //Opera 11.10+
+    background: #{$image}linear-gradient(to bottom, $fromColor, $toColor);
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#{$fromColor}', EndColorStr='#{$toColor}')";
+}
+
+//
+// Cross-browser opacity mixin
+// https://css-tricks.com/snippets/css/cross-browser-opacity/
+//
+@mixin opacity($opacity) {
+    $opacity_percent: $opacity * 100;
+
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=#{$opacity_percent})";
+    filter: alpha(opacity=$opacity_percent);
+    -moz-opacity: $opacity;
+    -khtml-opacity: $opacity; // Safari 1.x
+    opacity: $opacity;
+}
+
+body, html {
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    @include linear-gradient(#0f355d, #355e89);
+    font: .9em Verdana, Arial, Helvetica, sans-serif;
+    color: #000;
+    min-width: 705px;
+    padding: 0 1.5% 5px;
+}
+
+#header {
+    height: 90px;
+    background-image: url(/static/images/site/header.png);
+    background-repeat: no-repeat;
+    background-position: left;
+    text-align: right;
+
+    a {
+        overflow: hidden;
+        line-height: 3em;
+        width: 450px;
+        height: 90px;
+        right: 2.5%;
+        background: url(/static/images/site/header_right.png) no-repeat right top;
+        position: absolute;
+        text-decoration: none;
+        color: #FFF !important;
+        font-family: 'Prototype', 'Myriad Pro', Arial, sans-serif;
+        text-shadow: 0 2px 2px #000;
+        text-align: left;
+        font-weight: bold;
+        font-size: 2em;
+    }
+}
+
+#nav {
+    @include linear-gradient(#0a223b, #1c344d);
+
+    border-top: 1px solid #000;
+    border-right: 1px solid #000;
+    border-bottom: 1px solid #fff;
+
+    ul {
+        height: 66px;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+    }
+
+    li {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        line-height: 0;
+        float: left;
+    }
+
+    a {
+        height: 66px;
+        width: 140px;
+        display: block;
+        font-size: 0;
+        overflow: hidden;
+        line-height: 0;
+    }
+}
+
+// Navigation Menu
+$menu_items: (home, 0px), (bn1, -152px), (bn2, -285px), (bn3, -422px), (bn4, -564px), (bn5, -715px), (bn6, -854px);
+
+@each $id, $left in $menu_items {
+    ##{$id} {
+        background: url(/static/images/site/menu.png) no-repeat $left 0px;
+    }
+}
+
+#home, #bn1, #bn2, #bn3, #bn4, #bn5, #bn6 {
+    @include opacity(0.5);
+
+    &:hover {
+        @include opacity(1);
+    }
+}
+
+#snav {
+    background-color: #0b2540;
+    padding: 7px;
+    margin: 0;
+    border-right: 1px solid #000;
+    border-left: 1px solid #000;
+    line-height: 1.5em;
+    color: #006;
+
+    li {
+        display: inline;
+        margin: 0;
+        padding: 0;
+
+        + li {
+            border-left: 1px dashed #999;
+        }
+    }
+
+    a {
+        color: #fff;
+        background: none;
+        text-decoration: none;
+        padding: 0 10px;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
+
+#footer {
+    padding: 10px 5px 0;
+    font-size: .8em;
+    text-align: center;
+    color: #fff;
+}
+
+#content {
+    padding: 20px;
+    background-color: #fff;
+    border-right: 1px solid #000;
+    border-bottom: 1px solid #000;
+    border-left: 1px solid #000;
+}
+
+dt {
+    font-weight: bold;
+    margin: .3em 0;
+}
+
+h1 {
+    @include linear-gradient(#d39b47, #f5c173, "url(/static/images/site/h1.png) no-repeat top right");
+    height: 46px;
+    font: bold 1.5em Verdana;
+    line-height: 2.3em;
+    text-indent: 1em;
+}
+
+h2 {
+    font: bold 1em Verdana;
+    background: #fff url(/static/images/site/h2.png) no-repeat top left;
+    padding: 7px;
+    text-indent: 1em;
+}
+
+h3 {
+    font-size: 1em;
+    font-weight: bold;
+    text-decoration: underline;
+    margin: 5px 0;
+}
+
+acronym {
+    border-bottom: 1px dotted #333;
+    cursor: help;
+}
+
+img {
+    border: none;
+}
+
+dt {
+    font-weight: bold;
+    margin: .3em 0;
+}
+
+fieldset {
+    margin: 5px;
+}
+
+legend {
+    font-weight: bold;
+}
+
+#content a {
+    color: #1C3C5A;
+    border-bottom: 1px dashed #1C3C5A;
+    text-decoration: none;
+
+    &:hover {
+        border-bottom: 2px solid #031528;
+    }
+}

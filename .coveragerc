@@ -1,0 +1,3 @@
+[run]
+source = chiplibrary
+omit = chiplibrary/test*
