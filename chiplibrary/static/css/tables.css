@@ -1,0 +1,39 @@
+.sortable {
+  border: 1px solid #222;
+  border-spacing: 0;
+  border-collapse: collapse;
+  width: 100%;
+  margin: 10px 0 10px 0; }
+  .sortable caption {
+    padding: 0.5em;
+    margin: 0;
+    font-weight: bold; }
+  .sortable td {
+    padding: 5px;
+    border: 1px solid #222;
+    background-color: #eee; }
+  .sortable th {
+    background-color: #204A76;
+    color: white;
+    padding: 5px;
+    text-decoration: none;
+    border: 1px solid #222; }
+
+.sort-arrow, .descending-arrow, .ascending-arrow {
+  width: 13px;
+  height: 8px;
+  background-position: center center;
+  background-repeat: no-repeat;
+  margin-left: 3px; }
+
+.descending-arrow {
+  background-image: url("/web/20060709034759/http://www.smogon.com/media/down.gif"); }
+
+.ascending-arrow {
+  background-image: url("/web/20060709034759/http://www.smogon.com/media/up.gif"); }
+
+.sortable tr td.odd {
+  background: #EFEFEF; }
+
+.sortable tr td.even {
+  background: #81A0C1; }
