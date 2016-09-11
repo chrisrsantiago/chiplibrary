@@ -4,9 +4,8 @@
   font-weight: normal;
   src: url("/static/fonts/Prototype.ttf") format("truetype"); }
 
-body, html {
-  height: 100%;
-  margin: 0; }
+html {
+  height: 100%; }
 
 body {
   background: #355e89;
@@ -17,8 +16,10 @@ body {
   background: -o-linear-gradient(top, #0f355d, #355e89);
   background: linear-gradient(to bottom, #0f355d, #355e89);
   -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#0f355d', EndColorStr='#355e89')";
+  background-attachment: fixed;
   font: .9em Verdana, Arial, Helvetica, sans-serif;
   color: #000;
+  margin: 0;
   min-width: 705px;
   padding: 0 1.5% 5px; }
 
@@ -109,7 +110,7 @@ body {
     -khtml-opacity: 1;
     opacity: 1; }
 
-#snav {
+ul#snav {
   background-color: #0b2540;
   padding: 7px;
   margin: 0;
@@ -117,27 +118,27 @@ body {
   border-left: 1px solid #000;
   line-height: 1.5em;
   color: #006; }
-  #snav li {
+  ul#snav li {
     display: inline;
     margin: 0;
     padding: 0; }
-    #snav li + li {
+    ul#snav li + li {
       border-left: 1px dashed #999; }
-  #snav a {
+  ul#snav a {
     color: #fff;
     background: none;
     text-decoration: none;
     padding: 0 10px; }
-    #snav a:hover {
+    ul#snav a:hover {
       text-decoration: underline; }
 
-#footer {
+div#footer {
   padding: 10px 5px 0;
   font-size: .8em;
   text-align: center;
   color: #fff; }
 
-#content {
+div#content {
   padding: 20px;
   background-color: #fff;
   border-right: 1px solid #000;
@@ -178,8 +179,8 @@ acronym {
   border-bottom: 1px dotted #333;
   cursor: help; }
 
-img {
-  border: none; }
+a img, .noborder {
+  border: none !important; }
 
 dt {
   font-weight: bold;

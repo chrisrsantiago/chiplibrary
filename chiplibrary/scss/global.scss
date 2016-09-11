@@ -1,48 +1,18 @@
 @import "bourbon/bourbon";
+@import "mixins";
 
 @include font-face("Prototype", "/static/fonts/Prototype", $file-formats: ttf);
 
-//
-// Cross-browser gradient mixin by Andy Howells.
-// https://gist.github.com/andyunleashed/2700286
-//
-@mixin linear-gradient($fromColor, $toColor, $image: '') {
-    background: $toColor; //Fallback
-    @if str-length($image) > 1 {
-        $image: unquote('#{$image}, ');
-    }
-    background: #{$image}-webkit-gradient(linear, left top, left bottom, from($fromColor), to($toColor)); //Saf4+, Chrome
-    background: #{$image}-webkit-linear-gradient(top, $fromColor, $toColor); //Chrome 10+, Saf5.1+, iOS 5+
-    background: #{$image}-moz-linear-gradient(top, $fromColor, $toColor); //FF3.6
-    background: #{$image}-ms-linear-gradient(top, $fromColor, $toColor); //IE10
-    background: #{$image}-o-linear-gradient(top, $fromColor, $toColor); //Opera 11.10+
-    background: #{$image}linear-gradient(to bottom, $fromColor, $toColor);
-    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#{$fromColor}', EndColorStr='#{$toColor}')";
-}
-
-//
-// Cross-browser opacity mixin
-// https://css-tricks.com/snippets/css/cross-browser-opacity/
-//
-@mixin opacity($opacity) {
-    $opacity_percent: $opacity * 100;
-
-    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=#{$opacity_percent})";
-    filter: alpha(opacity=$opacity_percent);
-    -moz-opacity: $opacity;
-    -khtml-opacity: $opacity; // Safari 1.x
-    opacity: $opacity;
-}
-
-body, html {
+html {
     height: 100%;
-    margin: 0;
 }
 
 body {
     @include linear-gradient(#0f355d, #355e89);
+    background-attachment: fixed;
     font: .9em Verdana, Arial, Helvetica, sans-serif;
     color: #000;
+    margin: 0;
     min-width: 705px;
     padding: 0 1.5% 5px;
 }
@@ -121,7 +91,7 @@ $menu_items: (home, 0px), (bn1, -152px), (bn2, -285px), (bn3, -422px), (bn4, -56
     }
 }
 
-#snav {
+ul#snav {
     background-color: #0b2540;
     padding: 7px;
     margin: 0;
@@ -152,14 +122,14 @@ $menu_items: (home, 0px), (bn1, -152px), (bn2, -285px), (bn3, -422px), (bn4, -56
     }
 }
 
-#footer {
+div#footer {
     padding: 10px 5px 0;
     font-size: .8em;
     text-align: center;
     color: #fff;
 }
 
-#content {
+div#content {
     padding: 20px;
     background-color: #fff;
     border-right: 1px solid #000;
@@ -199,8 +169,8 @@ acronym {
     cursor: help;
 }
 
-img {
-    border: none;
+a img, .noborder {
+    border: none !important;
 }
 
 dt {

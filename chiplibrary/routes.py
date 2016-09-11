@@ -1,10 +1,13 @@
 # -*- coding: utf-8 -*-
+import os
+from pyramid.view import view_config
+from pyramid.response import FileResponse
+
 from pyramid.httpexceptions import HTTPMovedPermanently
 
 def add_route(config, name, pattern, **kw):
-    """Automatically remove the forward-slash to any matched routes by sending a HTTP 301
-    response.
-    """
+    """Automatically remove the forward-slash to any matched routes by
+    sending a HTTP 301 response."""
     config.add_route(name, pattern, **kw)
     if not pattern.endswith('/'):
         config.add_route(name + '_auto', pattern + '/')
@@ -17,6 +20,8 @@ def add_route(config, name, pattern, **kw):
 
 def includeme(config):
     config.add_static_view('static', 'static', cache_max_age=3600)
+    add_route(config, 'favicon', '/favicon.ico')
+    add_route(config, 'robots', '/robots.txt')
     
     add_route(config, 'index', '/')
     add_route(config, 'about', '/about')
@@ -32,3 +37,21 @@ def includeme(config):
     
     add_route(config, 'element_index', '/element')
     add_route(config, 'element_view', '/element/{name}')
+    
+@view_config(route_name='favicon')
+def favicon(request):
+    icon = os.path.join(
+        os.path.dirname(__file__),
+        'static',
+        'favicon.ico'
+    )
+    return FileResponse(icon, request=request)
+    
+@view_config(route_name='robots')
+def robots(request):
+    robots = os.path.join(
+        os.path.dirname(__file__),
+        'static',
+        'robots.txt'
+    )
+    return FileResponse(robots, request=request)

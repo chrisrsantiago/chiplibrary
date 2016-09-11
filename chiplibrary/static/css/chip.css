@@ -1,0 +1,131 @@
+/*************************
+    CHIP VIEWING
+*************************/
+div.chip-view a {
+  border: none; }
+
+div.chip-view div.left {
+  float: left;
+  width: 50%; }
+
+div.chip-view div.right {
+  float: right;
+  width: 48%; }
+
+div.chip-view dd.standard {
+  background: #d8d8e8; }
+
+div.chip-view dd.mega {
+  background: #a8e8e8; }
+
+div.chip-view dd.giga {
+  background: #f0c8e0; }
+
+div.chip-view dd.secret {
+  background: #c3c3d3; }
+
+div.chip-view dd.dark {
+  background: #b088d0; }
+
+div.chip-view dd.damage {
+  color: #a01313; }
+
+div.chip-view dd.recovery {
+  color: #449218; }
+
+div.chip-view div.image {
+  margin: auto;
+  padding: 0;
+  width: 64px;
+  height: 56px; }
+
+div.chip-view div.extended {
+  position: relative;
+  margin-left: 20px; }
+
+div.chip-view dl {
+  margin: 2em 0;
+  padding: 0; }
+
+div.chip-view dt {
+  background: #81a0c1;
+  background: -webkit-gradient(linear, left top, left bottom, from(#52789f), to(#81a0c1));
+  background: -webkit-linear-gradient(top, #52789f, #81a0c1);
+  background: -moz-linear-gradient(top, #52789f, #81a0c1);
+  background: -ms-linear-gradient(top, #52789f, #81a0c1);
+  background: -o-linear-gradient(top, #52789f, #81a0c1);
+  background: linear-gradient(to bottom, #52789f, #81a0c1);
+  -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#52789f', EndColorStr='#81a0c1')";
+  border-top: 1px solid #81a0c1;
+  border-left: 1px solid #81a0c1;
+  border-right: 1px solid #81a0c1;
+  color: #FFF;
+  font-variant: small-caps;
+  font-size: 1.5em;
+  margin: 0;
+  padding: .5em; }
+
+div.chip-view dd {
+  border-bottom: 1px solid #81a0c1;
+  border-left: 1px solid #81a0c1;
+  border-right: 1px solid #81a0c1;
+  margin: 0 0 1em 0;
+  padding: 1em .5em; }
+
+/*************************
+    CHIP LISTING
+*************************/
+table.battlechips {
+  border: none;
+  border-spacing: 0;
+  border-collapse: collapse;
+  width: 100%;
+  margin: 10px 0 10px 0; }
+  table.battlechips col.indice {
+    width: 1%; }
+  table.battlechips col.image {
+    width: 1%; }
+  table.battlechips col.name {
+    width: 15%; }
+  table.battlechips col.element {
+    width: 5%; }
+  table.battlechips col.damage, table.battlechips col.recovery {
+    width: 7%; }
+  table.battlechips col.size {
+    width: 3%; }
+  table.battlechips col.codes {
+    width: 10%; }
+  table.battlechips col.classification {
+    width: 1%; }
+  table.battlechips td {
+    padding: 5px; }
+  table.battlechips a {
+    border: none !important; }
+  table.battlechips th {
+    background-color: #204A76;
+    color: white;
+    padding: 5px;
+    text-align: left;
+    text-decoration: none; }
+  table.battlechips tr:nth-child(even) {
+    background: #EFEFEF; }
+  table.battlechips tr:nth-child(odd) {
+    background: #81A0C1; }
+  table.battlechips tr td.indice {
+    background: #204A76;
+    color: #FFF;
+    font-weight: bold; }
+  table.battlechips tr td.damage {
+    color: #a01313; }
+  table.battlechips tr td.recovery {
+    color: #449218; }
+  table.battlechips tr td.standard {
+    background: #d8d8e8; }
+  table.battlechips tr td.mega {
+    background: #a8e8e8; }
+  table.battlechips tr td.giga {
+    background: #f0c8e0; }
+  table.battlechips tr td.dark {
+    background: #b088d0; }
+  table.battlechips tr td.secret {
+    background: #c3c3d3; }

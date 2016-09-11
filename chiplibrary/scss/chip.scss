@@ -1,0 +1,198 @@
+@import "variables";
+@import "mixins";
+
+/*************************
+    CHIP VIEWING
+*************************/
+div.chip-view {
+  a {
+    border: none;
+  }
+  
+  div.left {
+    float: left;
+    width: 50%;
+  }
+
+  div.right {
+    float: right;
+    width: 48%;
+  }
+
+  dd {
+  
+    &.standard {
+      background: $standard-color;
+    }
+
+    &.mega {
+      background: $mega-color;
+    }
+
+    &.giga {
+      background: $giga-color;
+    }
+
+    &.secret {
+      background: $secret-color;
+    }
+
+    &.dark {
+      background: $dark-color;
+    }
+    
+    &.damage {
+        color: $damage-color;
+    }
+    
+    &.recovery {
+        color: $recovery-color;
+    }
+  }
+
+  div.image {
+    margin: auto;
+    padding: 0;
+    width: 64px;
+    height: 56px;
+  }
+
+  div.extended {
+    position: relative;
+    margin-left: 20px;
+  }
+  
+  dl {
+    margin: 2em 0;
+    padding: 0;
+  }
+  
+  dt {
+    @include linear-gradient($dt-color1, $dt-color2);
+    border-top: 1px solid $dt-color2;
+    border-left: 1px solid $dt-color2;
+    border-right: 1px solid $dt-color2;
+    color: #FFF;
+    font-variant: small-caps;
+    font-size: 1.5em;
+    margin: 0;
+    padding: .5em;
+  }
+  
+  dd {
+    border-bottom: 1px solid $dt-color2;
+    border-left: 1px solid $dt-color2;
+    border-right: 1px solid $dt-color2;
+    margin: 0 0 1em 0;
+    padding: 1em .5em;
+  }
+}
+
+
+/*************************
+    CHIP LISTING
+*************************/
+table.battlechips {
+  border: none;
+  border-spacing: 0;
+  border-collapse: collapse;
+  width: 100%;
+  margin: 10px 0 10px 0;
+
+  col {
+    &.indice {
+      width: 1%;
+    }
+    
+    &.image {
+      width: 1%;
+    }
+    
+    &.name {
+      width: 15%;
+    }
+    
+    &.element {
+      width: 5%;
+    }
+    
+    &.damage, &.recovery {
+      width: 7%;
+    }
+    
+    &.size {
+      width: 3%;
+    }
+    
+    &.codes {
+      width: 10%;
+    }
+    
+    &.classification {
+      width: 1%;
+    }
+  }
+
+  td {
+    padding: 5px;
+  }
+
+  a {
+    border: none !important;
+  }
+  
+  th {
+    background-color: #204A76;
+    color: white;
+    padding: 5px;
+    text-align: left;
+    text-decoration: none;
+  }
+  
+  tr {
+    &:nth-child(even) {
+      background: #EFEFEF;
+    }
+    
+    
+    &:nth-child(odd) {
+      background: #81A0C1;
+    }
+  
+    td.indice {
+      background: #204A76;
+      color: #FFF;
+      font-weight: bold;
+    }
+  
+    td.damage {
+        color: $damage-color;
+    }
+    
+    td.recovery {
+        color: $recovery-color;
+    }
+    
+    td.standard {
+      background: $standard-color;
+    }
+  
+    td.mega {
+      background: $mega-color;
+    }
+  
+    td.giga {
+      background: $giga-color;
+    }
+  
+    td.dark {
+      background: $dark-color;
+    }
+  
+    td.secret {
+      background: $secret-color;
+    }
+  }
+}
+
+

@@ -1,4 +1,5 @@
 <%inherit file="base.mako"/>
+<%def name="title()">About</%def>
 
 <p>For some unexpected reason, you're here.  If curiosity got the best of you, this is basically an idea that I have been wanting to work on for a while, but time has never permitted for me.  chiplibrary is basically a comprehensive index of all battle chips from the Mega Man Battle Network series.</p>
 
