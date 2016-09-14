@@ -23,6 +23,8 @@ requires = [
     'munch',
     'scrapy',
     'webhelpers2',
+    'whoosh',
+    'wtforms'
     ]
 
 tests_require = [
@@ -32,7 +34,7 @@ tests_require = [
     ]
 
 setup(name='chiplibrary',
-      version='1.0.0',
+      version='1.0.1',
       description='chiplibrary',
       long_description=README,
       classifiers=[
