@@ -38,6 +38,9 @@ def includeme(config):
     add_route(config, 'element_index', '/element')
     add_route(config, 'element_view', '/element/{name}')
     
+    add_route(config, 'search_index', '/search')
+    add_route(config, 'search_autocomplete', '/autocomplete')
+
 @view_config(route_name='favicon')
 def favicon(request):
     icon = os.path.join(

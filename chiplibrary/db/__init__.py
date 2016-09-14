@@ -5,7 +5,7 @@ from sqlalchemy.orm import configure_mappers
 import zope.sqlalchemy
 
 from .chip import *
-from ..lib import cache, cache_regions
+from . import cache
 
 configure_mappers()
 
@@ -13,7 +13,7 @@ def get_engine(settings, prefix='sqlalchemy.'):
     return engine_from_config(settings, prefix)
 
 def get_session_factory(engine):
-    factory = sessionmaker(query_cls=cache.query_callable(cache_regions))
+    factory = sessionmaker(query_cls=cache.query_callable())
     factory.configure(bind=engine)
     return factory
 

@@ -4,6 +4,14 @@ $giga-color: #f0c8e0;
 $dark-color: #b088d0;
 $secret-color: #c3c3d3;
 
+$classifications: (
+    ('standard', $standard-color),
+    ('mega', $mega-color),
+    ('giga', $giga-color),
+    ('dark', $dark-color),
+    ('secret', $secret-color)
+);
+
 $dt-color1: #52789f;
 $dt-color2: #81a0c1;
 

@@ -5,13 +5,13 @@
 
 <div class="chip-view">
     <div class="left ${chip.classification.name | str.lower}">
-    <div class="image"><img src="${request.static_path('chiplibrary:static/images/chips/%s/%s.gif' % (chip.game.name, h.chipimg(chip)))}" alt="${chip.name}"></div>
+    <div class="image"><img src="${h.chipimg(chip, request)}" alt="${chip.name}"></div>
     <dl>
         <dt>Codes</dt>
         <dd>
             <ul>
-            % for code in chip.codes:
-                <li>${code.code}</li>
+            % for code in chip.codes_iter():
+                <li>${code}</li>
             % endfor
             </ul>
         </dd>

@@ -22,12 +22,13 @@ def usage(argv):
     cmd = os.path.basename(argv[0])
     print("""
     Creates tables and populates them with battle chip data using a given
-    XML file.  If you need to generate an XML file, use the spider.py script
-    to do so.
+    XML file.  If you need an XML dump, download `chiplibrary-data`, and 
+    either use the already existing dumps/chips.xml which was pregenerated, or
+    run the `spider.py` script to generate a new one.
     
     usage: %s <filename> <config_uri> [var=value]
     
-    (example: "%s chips.xml development.ini")
+    (example: "%s chips.xml config.ini")
     """ % (cmd, cmd))
     sys.exit(1)
 

@@ -21,11 +21,11 @@ div.chip-view dd.mega {
 div.chip-view dd.giga {
   background: #f0c8e0; }
 
-div.chip-view dd.secret {
-  background: #c3c3d3; }
-
 div.chip-view dd.dark {
   background: #b088d0; }
+
+div.chip-view dd.secret {
+  background: #c3c3d3; }
 
 div.chip-view dd.damage {
   color: #a01313; }
@@ -119,13 +119,28 @@ table.battlechips {
     color: #a01313; }
   table.battlechips tr td.recovery {
     color: #449218; }
-  table.battlechips tr td.standard {
-    background: #d8d8e8; }
-  table.battlechips tr td.mega {
-    background: #a8e8e8; }
-  table.battlechips tr td.giga {
-    background: #f0c8e0; }
-  table.battlechips tr td.dark {
-    background: #b088d0; }
-  table.battlechips tr td.secret {
-    background: #c3c3d3; }
+  table.battlechips tr span.standard {
+    background: #d8d8e8;
+    border: 1px solid #d8d8e8;
+    border-radius: .5em;
+    padding: .5em; }
+  table.battlechips tr span.mega {
+    background: #a8e8e8;
+    border: 1px solid #a8e8e8;
+    border-radius: .5em;
+    padding: .5em; }
+  table.battlechips tr span.giga {
+    background: #f0c8e0;
+    border: 1px solid #f0c8e0;
+    border-radius: .5em;
+    padding: .5em; }
+  table.battlechips tr span.dark {
+    background: #b088d0;
+    border: 1px solid #b088d0;
+    border-radius: .5em;
+    padding: .5em; }
+  table.battlechips tr span.secret {
+    background: #c3c3d3;
+    border: 1px solid #c3c3d3;
+    border-radius: .5em;
+    padding: .5em; }

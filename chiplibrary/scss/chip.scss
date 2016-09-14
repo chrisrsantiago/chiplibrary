@@ -20,33 +20,18 @@ div.chip-view {
   }
 
   dd {
-  
-    &.standard {
-      background: $standard-color;
-    }
-
-    &.mega {
-      background: $mega-color;
-    }
-
-    &.giga {
-      background: $giga-color;
-    }
-
-    &.secret {
-      background: $secret-color;
-    }
-
-    &.dark {
-      background: $dark-color;
+    @each $classification, $color in $classifications {
+      &.#{$classification} {
+        background: $color;
+      }
     }
     
     &.damage {
-        color: $damage-color;
+      color: $damage-color;
     }
     
     &.recovery {
-        color: $recovery-color;
+      color: $recovery-color;
     }
   }
 
@@ -172,25 +157,14 @@ table.battlechips {
     td.recovery {
         color: $recovery-color;
     }
-    
-    td.standard {
-      background: $standard-color;
-    }
-  
-    td.mega {
-      background: $mega-color;
-    }
-  
-    td.giga {
-      background: $giga-color;
-    }
-  
-    td.dark {
-      background: $dark-color;
-    }
-  
-    td.secret {
-      background: $secret-color;
+
+    @each $classification, $color in $classifications {
+      span.#{$classification} {
+        background: $color;
+        border: 1px solid $color;
+        border-radius: .5em;
+        padding: .5em;
+      }
     }
   }
 }

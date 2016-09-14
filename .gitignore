@@ -27,6 +27,11 @@ var/
 *.egg-info/
 .installed.cfg
 *.egg
+MANIFEST
+MANIFEST.in
+
+# Re-include the lib folder, considering it's not a part of distribution/packaging
+!chiplibrary/lib
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
@@ -85,6 +90,13 @@ celerybeat-schedule
 # virtualenv
 venv/
 ENV/
+
+# Whoosh Indexes
+whoosh-data/
+
+# dogpile.cache FIles
+*.dbm
+*.rdb
 
 # Spyder project settings
 .spyderproject

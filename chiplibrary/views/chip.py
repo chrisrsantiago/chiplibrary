@@ -4,8 +4,8 @@ from pyramid.httpexceptions import HTTPNotFound
 from sqlalchemy.orm import joinedload
 from sqlalchemy.orm.exc import NoResultFound
 
-from ..lib.cache import FromCache
 from ..db import Chip
+from ..db.cache import FromCache
 from ..db.chip import Games, cached_bits
 
 @view_config(route_name='chip_index', renderer='../templates/chip/index.mako')
@@ -78,13 +78,8 @@ def view_game(request):
             .one()
     except (NoResultFound):
         raise HTTPNotFound()
-    
-    if len(list(result.codes)) > 1:
-        chipcodes_multi = True
-    else:
-        chipcodes_multi = False
         
     return {
         'chip': result,
-        'settings': {'chipcodes_multi': chipcodes_multi}
+        'settings': {}
     }

@@ -17,16 +17,14 @@
     <link rel="icon" type="image/png" sizes="96x96" href="${request.static_path('chiplibrary:static/images/site/icons/favicon-96x96.png')}">
     <link rel="icon" type="image/png" sizes="16x16" href="${request.static_path('chiplibrary:static/images/site/icons/favicon-16x16.png')}">
     <link rel="manifest" href="${request.static_path('chiplibrary:static/images/site/icons/manifest.json')}">
-    <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="msapplication-TileImage" content="${request.static_path('chiplibrary:static/images/site/icons/ms-icon-144x144.png')}">
     
     <title>${self.title()} | chiplibrary</title>
 
     % for stylesheet in ('global.css', 'chip.css', 'jquery/jquery-ui.css'):
     <link href="${request.static_path('chiplibrary:static/css/%s' % (stylesheet,))}" rel="stylesheet">
     % endfor
-    
-    % for script in ('jquery-3.0.0.min.js', 'jquery-ui.min.js'):
+      
+    % for script in ('jquery-3.0.0.min.js', 'jquery-ui.min.js', 'search.js'):
     <script src="${request.static_path('chiplibrary:static/js/%s' % (script,))}" type="text/javascript"></script>
     % endfor
 </head>
@@ -48,6 +46,8 @@
     <li><a href="http://github.com/chrisrsantiago/chiplibrary">Development and Bugs</a></li>
 </ul>
 <div id="content">
+    <%include file="widgets/search.mako"/>
+    <div id="log"></div>
     <h1>${self.title_header()}</h1>
 ${self.body()}
     <br style="clear: both;" />

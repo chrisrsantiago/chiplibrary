@@ -145,6 +145,22 @@ div#content {
   border-bottom: 1px solid #000;
   border-left: 1px solid #000; }
 
+div.errors, div.erors {
+  padding: .5em; }
+
+div.errors {
+  background: #e9d3d3;
+  color: #b41414;
+  border: 1px solid #b41414; }
+
+div.success {
+  background: #95dab9;
+  color: #1e8f27;
+  border: 1px solid #1e8f27; }
+
+div#search {
+  text-align: left; }
+
 dt {
   font-weight: bold;
   margin: .3em 0; }

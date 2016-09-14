@@ -1,3 +1,0 @@
-For a comprehensive list of changes, consult the project page on github:
-
-http://github.com/chrisrsantiago/chiplibrary

@@ -15,7 +15,7 @@ from sqlalchemy import (
 from sqlalchemy.ext.declarative import declarative_base, declared_attr
 from sqlalchemy.orm import relationship
 
-from ..lib.cache import RelationshipCache
+from .cache import RelationshipCache
 from .meta import metadata, Base
 
 __all__ = [
@@ -28,63 +28,7 @@ __all__ = [
     'Elements'
 ]
 
-
-# A Python dictionary mapping the Unicode codes of the greek alphabet to
-# their names, useful for URL handling.
-# Credit: Benjamin Wohlwend
-# https://gist.github.com/piquadrat/765262
-greek_alphabet = {
-    u'\u0391': 'Alpha',
-    u'\u0392': 'Beta',
-    u'\u0393': 'Gamma',
-    u'\u0394': 'Delta',
-    u'\u0395': 'Epsilon',
-    u'\u0396': 'Zeta',
-    u'\u0397': 'Eta',
-    u'\u0398': 'Theta',
-    u'\u0399': 'Iota',
-    u'\u039A': 'Kappa',
-    u'\u039B': 'Lamda',
-    u'\u039C': 'Mu',
-    u'\u039D': 'Nu',
-    u'\u039E': 'Xi',
-    u'\u039F': 'Omicron',
-    u'\u03A0': 'Pi',
-    u'\u03A1': 'Rho',
-    u'\u03A3': 'Sigma',
-    u'\u03A4': 'Tau',
-    u'\u03A5': 'Upsilon',
-    u'\u03A6': 'Phi',
-    u'\u03A7': 'Chi',
-    u'\u03A8': 'Psi',
-    u'\u03A9': 'Omega',
-    u'\u03B1': 'alpha',
-    u'\u03B2': 'beta',
-    u'\u03B3': 'gamma',
-    u'\u03B4': 'delta',
-    u'\u03B5': 'epsilon',
-    u'\u03B6': 'zeta',
-    u'\u03B7': 'eta',
-    u'\u03B8': 'theta',
-    u'\u03B9': 'iota',
-    u'\u03BA': 'kappa',
-    u'\u03BB': 'lamda',
-    u'\u03BC': 'mu',
-    u'\u03BD': 'nu',
-    u'\u03BE': 'xi',
-    u'\u03BF': 'omicron',
-    u'\u03C0': 'pi',
-    u'\u03C1': 'rho',
-    u'\u03C3': 'sigma',
-    u'\u03C4': 'tau',
-    u'\u03C5': 'upsilon',
-    u'\u03C6': 'phi',
-    u'\u03C7': 'chi',
-    u'\u03C8': 'psi',
-    u'\u03C9': 'omega',
-}
-
-class Elements(enum.Enum):
+class Elements(enum.IntEnum):
     """Chip Elements"""
     null = 1
     aqua = 2
@@ -101,7 +45,7 @@ class Elements(enum.Enum):
     wind = 13
     wood = 14
     
-class Classification(enum.Enum):
+class Classification(enum.IntEnum):
     """Chip Classifications
     
     standard - The regular set of chips in the game.
@@ -124,7 +68,7 @@ class Classification(enum.Enum):
     secret = 4
     dark = 5
 
-class Games(enum.Enum):
+class Games(enum.IntEnum):
     """Valid games."""
     bn1 = 1
     bn2 = 2
@@ -133,7 +77,7 @@ class Games(enum.Enum):
     bn5 = 5
     bn6 = 6
 
-class Versions(enum.Enum):
+class Versions(enum.IntEnum):
     """Valid game versions."""
     white = 1
     blue = 2
@@ -260,6 +204,12 @@ class Chip(Base):
         self.damage_min = damage_min
         self.damage_max = damage_max
         self.recovery = recovery
+        
+    def __repr__(self):
+        return u'<Chip: #%s - %s - %s>' % (self.indice, self.name, self.game)
+
+    def codes_iter(self):
+        return [code.code for code in self.codes]
     
 
 class _ChipBase(object):
@@ -316,6 +266,9 @@ class ChipCode(ChipBase):
         self.id_chip = id_chip
         self.code = code
         self.game = game
+        
+    def __repr__(self):
+        return u'<ChipCode: #(%s) - %s - %s>' % (self.id_chip, self.code, self.game)
 
 class ChipEffects(ChipBase):
     __tablename__ = 'chip_effects'
@@ -345,6 +298,9 @@ class ChipEffects(ChipBase):
         self.paralyze = paralyze
         self.push = push
         
+    def __repr__(self):
+        return u'<ChipEffects: #(%s) - %s>' % (self.id_chip, self.game)
+
 cached_bits = RelationshipCache(Chip.codes, 'default') \
     .and_(
         RelationshipCache(Chip.effects, 'default')

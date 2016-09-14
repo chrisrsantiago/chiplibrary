@@ -56,15 +56,10 @@
     % endif
 </tr>
 % for chip in chips:
-    <% 
-        chip_codes = []
-        for c in chip.codes:
-            chip_codes.append(c)
-    %>
 <tr>
     <td class="indice">${chip.indice}</td>
-    <td><img src="${request.static_path('chiplibrary:static/images/chips/%s/%s.gif' % (chip.game.name, h.chipimg(chip)))}" alt="${chip.name}"></td>
-    <td><a href="${request.route_path('chip_view_game', game=request.matchdict['game'], name=chip.name)}">${chip.name}</a>
+    <td><img src="${h.chipimg(chip, request)}" alt="${chip.name}"></td>
+    <td><a href="${request.route_path('chip_view_game', game=chip.game.value, name=chip.name)}">${chip.name}</a>
     </td>
     <td><img src="${request.static_path('chiplibrary:static/images/elements/%s.png' % (chip.element.name))}" alt="${chip.element.name}"></td>
     <td class="damage">
@@ -85,20 +80,20 @@
     % endif
     </td>
     <td>
-    % for code in chip_codes:
+    % for code in chip.codes_iter():
         <%
             comma = ', '
             if loop.last:
                 comma = ''
         %>
-        ${code.code}${comma}
+        ${code}${comma}
     % endfor
     </td>
     % if settings['size']:
     <td>${chip.size}MB</td>
     % endif
     % if settings['classifications']:
-    <td class="${chip.classification.name | str.lower}">${chip.classification.name}</td>
+    <td><span class="${chip.classification.name | str.lower}">${chip.classification.name}</span></td>
     % endif
 </tr>
 % endfor

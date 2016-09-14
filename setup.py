@@ -20,6 +20,7 @@ requires = [
     'waitress',
     'libsass',
     'mistune',
+    'munch',
     'scrapy',
     'webhelpers2',
     ]
@@ -31,9 +32,9 @@ tests_require = [
     ]
 
 setup(name='chiplibrary',
-      version='0.0.1',
+      version='1.0.0',
       description='chiplibrary',
-      long_description=README + '\n\n' + CHANGES,
+      long_description=README,
       classifiers=[
           "Programming Language :: Python",
           "Framework :: Pyramid",
@@ -43,7 +44,7 @@ setup(name='chiplibrary',
       author='Christopher Santiago',
       author_email='',
       url='http://github.com/chrisrsantiago/chiplibrary',
-      keywords='web wsgi bfg pylons pyramid megaman battle network',
+      keywords='web wsgi pylons pyramid megaman battle network',
       packages=find_packages(),
       include_package_data=True,
       zip_safe=False,
@@ -56,5 +57,6 @@ setup(name='chiplibrary',
       main = chiplibrary:main
       [console_scripts]
       initialize_chiplibrary_db = chiplibrary.scripts.initializedb:main
+      initialize_chiplibrary_index = chiplibrary.scripts.index:main
       """,
       )

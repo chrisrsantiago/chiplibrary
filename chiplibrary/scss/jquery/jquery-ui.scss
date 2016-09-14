@@ -182,7 +182,17 @@
 	top: 0;
 	left: 0;
 	cursor: default;
+    max-height: 150px;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
+/* IE 6 doesn't support max-height
+* we use height instead, but this forces the menu to always be this tall
+*/
+* html .ui-autocomplete {
+    height: 150px;
+}
+
 .ui-menu {
 	list-style: none;
 	padding: 0;
@@ -199,6 +209,16 @@
 	/* support: IE10, see #8844 */
 	list-style-image: url("data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7");
 }
+
+.ui-menu-item a {
+    text-decoration: none !important;
+    display: block;
+}
+
+.ui-menu-item span.game {
+    color: #6d7781;
+}
+
 .ui-menu .ui-menu-item-wrapper {
 	position: relative;
 	padding: 3px 1em 3px .4em;
