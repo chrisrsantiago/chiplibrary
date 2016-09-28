@@ -9,6 +9,15 @@
 
     <dt><a href="http://sprites-inc.co.uk/" title="Sprites INC.">Sprites INC.</a></dt>
     <dd>For providing literally every single piece of in-game sprites.</dd>
+
+    <dt><a href="https://megamanbattle.network/" title="Paul Anthony Webb">Paul Anthony Webb (NetOpWibby)</a></dt>
+    <dd>Supporting the project and by helping spread the word.  Definitely check out his works.</dd>
+    
+    <dt><a href="https://twitter.com/tterraj42" title="Tterraj42's Twitter">Tterraj42</a><br><a href="https://twitter.com/cheeseandcereal" title="cheeseandcereal's Twitter">cheeseandcereal</a></dt>
+    <dd>For providing additional missing information, including but not limited to: Japanese names and Game IDs via their <a href="https://docs.google.com/spreadsheets/d/18qUmXQP_w6g7Guy_fpzaCCWph17cxSetR29n5WOxXKI/pubhtml" title="MMBN Chip List">MMBN Chip List</a>.</dd>
+    
+    <dt>Diomedes A. Giron</dt>
+    <dd>For the wonderful right header :)</dd>
 </dl>
 
 <h2>FAQ Writers</h2>

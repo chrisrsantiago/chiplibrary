@@ -34,7 +34,7 @@ tests_require = [
     ]
 
 setup(name='chiplibrary',
-      version='1.0.1',
+      version='1.2.0',
       description='chiplibrary',
       long_description=README,
       classifiers=[
@@ -44,7 +44,7 @@ setup(name='chiplibrary',
           "Topic :: Internet :: WWW/HTTP :: WSGI :: Application",
       ],
       author='Christopher Santiago',
-      author_email='',
+      author_email='admin@nachtara.com',
       url='http://github.com/chrisrsantiago/chiplibrary',
       keywords='web wsgi pylons pyramid megaman battle network',
       packages=find_packages(),

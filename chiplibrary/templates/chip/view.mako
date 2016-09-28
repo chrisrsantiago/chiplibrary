@@ -25,8 +25,8 @@
         % endif
         <dt>Elemental Information</dt>
         <dd>This is a <a href="${request.route_path('element_view', name=chip.element.name)}" title="${chip.element.name}"><img src="${request.static_path('chiplibrary:static/images/elements/%s.png' % (chip.element.name))}" alt="${chip.element.name}"> (${chip.element.name | str.title})</a>  chip.
-        % if not chip.element.name == 'null':
-        It is strong against <a href="${request.route_path('element_view', name=h.strengths[chip.element.name])}" title="${h.strengths[chip.element.name]}"><img src="${request.static_path('chiplibrary:static/images/elements/%s.png' % (h.strengths[chip.element.name]))}" alt="${h.strengths[chip.element.name]}"> (${h.strengths[chip.element.name]})</a>-based opponents.
+        % if r.elements[chip.element.name].strength:
+        It is strong against <a href="${request.route_path('element_view', name=r.elements[chip.element.name].strength)}" title="${r.elements[chip.element.name].strength}"><img src="${request.static_path('chiplibrary:static/images/elements/%s.png' % (r.elements[chip.element.name].strength))}" alt="${r.elements[chip.element.name].strength}"> (${r.elements[chip.element.name].strength})</a>-based opponents.
         % else:
         It has no elemental strengths.
         % endif
@@ -59,7 +59,7 @@
             <dt>Game</dt>
             <dd><a href="${request.route_path('chip_index_game', game=chip.game.value)}">Battle Network ${chip.game.value}</a></dd>
             <dt>Rarity</dt>
-            <dd>This is a <strong>${h.rarities[chip.rarity]}</strong> chip.</dd>
+            <dd>This is a <strong>${r.rarities[chip.rarity]}</strong> chip.</dd>
             % if chip.version:
             <dt>Version</dt>
             <dd>${chip.version.name | str.title}</dd>

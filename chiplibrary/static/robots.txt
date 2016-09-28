@@ -1,7 +1,2 @@
 User-agent: *
-Disallow: /manifest.json
-Disallow: /images/
-Disallow: /css/
-Disallow: /js/
-Disallow: /fonts/
-
+Disallow: /static/

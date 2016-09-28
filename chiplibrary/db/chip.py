@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 import string
-import enum
 
 from sqlalchemy import (
     Column,
@@ -15,6 +14,7 @@ from sqlalchemy import (
 from sqlalchemy.ext.declarative import declarative_base, declared_attr
 from sqlalchemy.orm import relationship
 
+from ..lib.reference import Element, Classification, Game, Version
 from .cache import RelationshipCache
 from .meta import metadata, Base
 
@@ -22,71 +22,8 @@ __all__ = [
     'Chip',
     'ChipBase',
     'ChipCode',
-    'ChipEffects',
-    'Classification',
-    'Games',
-    'Elements'
+    'ChipEffects'
 ]
-
-class Elements(enum.IntEnum):
-    """Chip Elements"""
-    null = 1
-    aqua = 2
-    breaking = 3
-    cursor = 4
-    electric = 5
-    fire = 6
-    invisible = 7
-    obstacle = 8
-    plus = 9
-    recovery = 10
-    sword = 11
-    terrain = 12
-    wind = 13
-    wood = 14
-    
-class Classification(enum.IntEnum):
-    """Chip Classifications
-    
-    standard - The regular set of chips in the game.
-
-    mega (BN3+) - Usually navi chips or stronger chips, these tend to have more
-    limits as a side-effect for power.
-    
-    giga (BN3+) - The strongest chips in the game; usually the rarest, and
-    limited to one per folder.
-    
-    secret - (BN4-BN5) Tend to be navi chips, but unobtainable through regular
-    means.
-
-    dark - (BN5) Powerful chips that tend to come with temporary/permanent
-    negative side-effects for the player.
-    """
-    standard = 1
-    mega = 2
-    giga = 3
-    secret = 4
-    dark = 5
-
-class Games(enum.IntEnum):
-    """Valid games."""
-    bn1 = 1
-    bn2 = 2
-    bn3 = 3
-    bn4 = 4
-    bn5 = 5
-    bn6 = 6
-
-class Versions(enum.IntEnum):
-    """Valid game versions."""
-    white = 1
-    blue = 2
-    redsun = 3
-    bluemoon = 4
-    colonel = 5
-    protoman = 6
-    gregar = 7
-    falzar = 8    
 
 class Chip(Base):
     """Battle Chips
@@ -107,12 +44,12 @@ class Chip(Base):
         obtainable in the games.'''
     )
     game = Column(
-        Enum(Games),
+        Enum(Game),
         nullable=False,
         doc=u'''The game where the chip is from.'''
     )
     version = Column(
-        Enum(Versions),
+        Enum(Version),
         nullable=True,
         doc=u'''Post MMBN2, each MMBN game had version-exclusive chips,
         so we are accounting for those.  In the case that the chip is not
@@ -138,7 +75,7 @@ class Chip(Base):
         cascade='save-update, merge, delete'
     )
     element = Column(
-        Enum(Elements),
+        Enum(Element),
         nullable=False,
         doc=u'''The element for the chip, can be any element found in Elements
         enum.'''
@@ -189,7 +126,7 @@ class Chip(Base):
     
     def __init__(self, indice='', game='', version='', name='',
         classification='', element='', size=0, description='',
-        summary='', rarity='', damage_min=0, damage_max=0, recovery=0
+        summary='', rarity=0, damage_min=0, damage_max=0, recovery=0
     ):
         self.indice = indice
         self.game = game
@@ -200,7 +137,10 @@ class Chip(Base):
         self.size = size
         self.description = description
         self.summary = summary
-        self.rarity = rarity
+        if rarity > 0:
+            self.rarity = 5
+        else:
+            self.rarity = rarity
         self.damage_min = damage_min
         self.damage_max = damage_max
         self.recovery = recovery
@@ -222,7 +162,7 @@ class _ChipBase(object):
         autoincrement=True
     )
     game = Column(
-        Enum(Games),
+        Enum(Game),
         nullable=False,
         doc=u'''The game where the chip is from'''
     )

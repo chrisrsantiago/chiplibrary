@@ -1,0 +1,144 @@
+.advanced-search .column {
+  float: left;
+  width: 29%; }
+
+.advanced-search .submit {
+  clear: both; }
+
+.advanced-search #element,
+.advanced-search #classification,
+.advanced-search #code {
+  list-style: none; }
+  .advanced-search #element li,
+  .advanced-search #classification li,
+  .advanced-search #code li {
+    display: inline-block; }
+  .advanced-search #element label,
+  .advanced-search #classification label,
+  .advanced-search #code label {
+    display: block; }
+
+.advanced-search #game,
+.advanced-search #version,
+.advanced-search #rarity {
+  list-style: none;
+  width: 40%; }
+  .advanced-search #game input,
+  .advanced-search #version input,
+  .advanced-search #rarity input {
+    float: right; }
+  .advanced-search #game li,
+  .advanced-search #version li,
+  .advanced-search #rarity li {
+    clear: both; }
+
+.advanced-search #code li {
+  padding: .1em;
+  width: 5em; }
+
+.advanced-search #game {
+  width: 20%; }
+
+.advanced-search #version {
+  width: 28%; }
+
+.advanced-search #classification li {
+  padding-right: 2%; }
+
+.advanced-search #classification input {
+  margin-left: 38%; }
+
+.advanced-search #classification label {
+  font-variant: small-caps;
+  font-weight: bold;
+  padding: 5%; }
+
+.advanced-search #classification label[for=classification-0] {
+  background: #d8d8e8; }
+
+.advanced-search #classification label[for=classification-1] {
+  background: #a8e8e8; }
+
+.advanced-search #classification label[for=classification-2] {
+  background: #f0c8e0; }
+
+.advanced-search #classification label[for=classification-3] {
+  background: #c3c3d3; }
+
+.advanced-search #classification label[for=classification-4] {
+  background: #d8d8e8; }
+
+.advanced-search #element li {
+  padding-right: 16.7%;
+  width: 8%; }
+
+.advanced-search #element label {
+  width: 16px;
+  height: 16px;
+  line-height: 3; }
+
+.advanced-search #element input {
+  margin-top: 55%; }
+
+.advanced-search #element label[for=element-0] {
+  background: url("/static/images/elements/null.png") no-repeat; }
+
+.advanced-search #element label[for=element-1] {
+  background: url("/static/images/elements/aqua.png") no-repeat; }
+
+.advanced-search #element label[for=element-2] {
+  background: url("/static/images/elements/breaking.png") no-repeat; }
+
+.advanced-search #element label[for=element-3] {
+  background: url("/static/images/elements/cursor.png") no-repeat; }
+
+.advanced-search #element label[for=element-4] {
+  background: url("/static/images/elements/electric.png") no-repeat; }
+
+.advanced-search #element label[for=element-5] {
+  background: url("/static/images/elements/fire.png") no-repeat; }
+
+.advanced-search #element label[for=element-6] {
+  background: url("/static/images/elements/invisible.png") no-repeat; }
+
+.advanced-search #element label[for=element-7] {
+  background: url("/static/images/elements/obstacle.png") no-repeat; }
+
+.advanced-search #element label[for=element-8] {
+  background: url("/static/images/elements/plus.png") no-repeat; }
+
+.advanced-search #element label[for=element-9] {
+  background: url("/static/images/elements/recovery.png") no-repeat; }
+
+.advanced-search #element label[for=element-10] {
+  background: url("/static/images/elements/sword.png") no-repeat; }
+
+.advanced-search #element label[for=element-11] {
+  background: url("/static/images/elements/terrain.png") no-repeat; }
+
+.advanced-search #element label[for=element-12] {
+  background: url("/static/images/elements/wind.png") no-repeat; }
+
+.advanced-search #element label[for=element-13] {
+  background: url("/static/images/elements/wood.png") no-repeat; }
+
+.advanced-search .description {
+  display: none; }
+
+.advanced-search a.help {
+  background: url(/static/images/site/famfamfam/help.png) no-repeat;
+  border: none;
+  cursor: help;
+  display: inline-block;
+  font-size: 0px;
+  height: 16px;
+  overflow: hidden;
+  width: 16px; }
+  .advanced-search a.help:hover {
+    border: none; }
+
+.syntax-search span.syntax {
+  background: #e2e2e2;
+  font-family: Monospace;
+  font-style: italic;
+  font-size: 1.1em; }

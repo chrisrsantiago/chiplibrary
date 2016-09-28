@@ -4,9 +4,10 @@ from pyramid.httpexceptions import HTTPNotFound
 from sqlalchemy.orm import joinedload
 from sqlalchemy.orm.exc import NoResultFound
 
+from ..lib.reference import Game
 from ..db import Chip
 from ..db.cache import FromCache
-from ..db.chip import Games, cached_bits
+from ..db.chip import cached_bits
 
 @view_config(route_name='chip_index', renderer='../templates/chip/index.mako')
 def index(request):
@@ -19,7 +20,7 @@ def index(request):
 def index_game(request):
     result = []
     try:
-        game = Games(int(request.matchdict['game']))
+        game = Game(int(request.matchdict['game']))
         result = request.dbsession.query(Chip) \
             .filter(Chip.game == game) \
             .options(
@@ -66,7 +67,7 @@ def view(request):
 @view_config(route_name='chip_view_game', renderer='../templates/chip/view.mako')
 def view_game(request):
     try:
-        game = Games(int(request.matchdict['game']))
+        game = Game(int(request.matchdict['game']))
         result = request.dbsession.query(Chip) \
             .filter(Chip.game == game) \
             .filter(Chip.name == request.matchdict['name']) \

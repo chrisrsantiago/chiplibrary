@@ -6,7 +6,7 @@ div.chip-view a {
 
 div.chip-view div.left {
   float: left;
-  width: 50%; }
+  width: 48%; }
 
 div.chip-view div.right {
   float: right;
@@ -56,12 +56,12 @@ div.chip-view dt {
   background: -o-linear-gradient(top, #52789f, #81a0c1);
   background: linear-gradient(to bottom, #52789f, #81a0c1);
   -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#52789f', EndColorStr='#81a0c1')";
-  border-top: 1px solid #81a0c1;
   border-left: 1px solid #81a0c1;
+  border-top: 1px solid #81a0c1;
   border-right: 1px solid #81a0c1;
   color: #FFF;
-  font-variant: small-caps;
   font-size: 1.5em;
+  font-variant: small-caps;
   margin: 0;
   padding: .5em; }
 
@@ -100,7 +100,8 @@ table.battlechips {
   table.battlechips td {
     padding: 5px; }
   table.battlechips a {
-    border: none !important; }
+    border: none !important;
+    text-decoration: underline !important; }
   table.battlechips th {
     background-color: #204A76;
     color: white;

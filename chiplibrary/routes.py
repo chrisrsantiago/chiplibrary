@@ -22,22 +22,20 @@ def includeme(config):
     config.add_static_view('static', 'static', cache_max_age=3600)
     add_route(config, 'favicon', '/favicon.ico')
     add_route(config, 'robots', '/robots.txt')
-    
+
     add_route(config, 'index', '/')
     add_route(config, 'about', '/about')
     add_route(config, 'credits', '/credits')
-    add_route(config, 'user_login', '/login')
-    add_route(config, 'user_preferences', '/preferences')
-    
+
     add_route(config, 'chip_index', '/chips')
     add_route(config, 'chip_index_game', '/chips/bn{game:\d+}')
-    
+
     add_route(config, 'chip_view_game', '/chips/bn{game:\d+}/{name}')
     add_route(config, 'chip_view', '/chips/{name}')
-    
-    add_route(config, 'element_index', '/element')
-    add_route(config, 'element_view', '/element/{name}')
-    
+
+    add_route(config, 'element_index', '/elements')
+    add_route(config, 'element_view', '/elements/{name}')
+
     add_route(config, 'search_index', '/search')
     add_route(config, 'search_autocomplete', '/autocomplete')
 
@@ -49,7 +47,7 @@ def favicon(request):
         'favicon.ico'
     )
     return FileResponse(icon, request=request)
-    
+
 @view_config(route_name='robots')
 def robots(request):
     robots = os.path.join(

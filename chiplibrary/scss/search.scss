@@ -1,0 +1,197 @@
+@import "bourbon/bourbon";
+@import "mixins";
+@import "variables";
+
+.advanced-search .column {
+    float: left;
+    width: 29%;
+}
+
+
+.advanced-search .submit {
+    clear: both;
+}
+
+.advanced-search #element,
+.advanced-search #classification,
+.advanced-search #code {
+    list-style: none;
+
+    li {
+        display: inline-block;
+    }
+    
+    label {
+        display: block;
+    }
+}
+
+.advanced-search #game,
+.advanced-search #version,
+.advanced-search #rarity
+{
+    list-style: none;
+    width: 40%;
+
+    input {
+        float: right;
+    }
+    
+    li {
+        clear: both;
+    }
+}
+
+.advanced-search #code {
+    li {
+        padding: .1em;
+        width: 5em;
+    }
+}
+
+.advanced-search #game {
+    width: 20%;
+}
+
+.advanced-search #version {
+    width: 28%;
+}
+
+.advanced-search #classification {
+    li {
+        padding-right: 2%;
+    }
+    
+    input {
+        margin-left: 38%;
+    }
+    
+    label {
+        font-variant: small-caps;
+        font-weight: bold;
+        padding: 5%;
+    }
+    
+    label[for=classification-0] {
+        background: $standard-color;
+    }
+
+
+    label[for=classification-1] {
+        background: $mega-color;
+    }
+    
+    label[for=classification-2] {
+        background: $giga-color;
+    }
+    
+    label[for=classification-3] {
+        background: $secret-color;
+    }
+    
+    label[for=classification-4] {
+        background: $standard-color;
+    }
+}
+
+.advanced-search #element {
+    li {
+        padding-right: 16.7%;
+        width: 8%;
+    }
+    
+    label {
+        width: 16px;
+        height: 16px;
+        line-height: 3;
+    }
+    
+    input {
+        margin-top: 55%;
+    }
+    
+    label[for=element-0] {
+        background: url('/static/images/elements/null.png') no-repeat;
+    }
+
+    label[for=element-1] {
+        background: url('/static/images/elements/aqua.png') no-repeat;
+    }
+    
+    label[for=element-2] {
+        background: url('/static/images/elements/breaking.png') no-repeat;
+    }
+    
+    label[for=element-3] {
+        background: url('/static/images/elements/cursor.png') no-repeat;
+    }
+    
+    label[for=element-4] {
+        background: url('/static/images/elements/electric.png') no-repeat;
+    }
+    
+    label[for=element-5] {
+        background: url('/static/images/elements/fire.png') no-repeat;
+    }
+    
+    label[for=element-6] {
+        background: url('/static/images/elements/invisible.png') no-repeat;
+    }
+    
+    label[for=element-7] {
+        background: url('/static/images/elements/obstacle.png') no-repeat;
+    }
+    
+    label[for=element-8] {
+        background: url('/static/images/elements/plus.png') no-repeat;
+    }
+
+    label[for=element-9] {
+        background: url('/static/images/elements/recovery.png') no-repeat;
+    }
+    
+    label[for=element-10] {
+        background: url('/static/images/elements/sword.png') no-repeat;
+    }
+
+    label[for=element-11] {
+        background: url('/static/images/elements/terrain.png') no-repeat;
+    }
+    
+    label[for=element-12] {
+        background: url('/static/images/elements/wind.png') no-repeat;
+    }
+    
+    label[for=element-13] {
+        background: url('/static/images/elements/wood.png') no-repeat;
+    }
+}
+
+.advanced-search .description {
+    display: none;
+}
+
+.advanced-search a.help {
+    background: url(/static/images/site/famfamfam/help.png) no-repeat;
+    border: none;
+    cursor: help;
+    display: inline-block;
+    font-size: 0px;
+    height: 16px;
+    overflow: hidden;
+    width: 16px;
+    
+    &:hover {
+        border: none;
+    }
+}
+
+.syntax-search {
+
+    span.syntax {
+        background: #e2e2e2;
+        font-family: Monospace;
+        font-style: italic;
+        font-size: 1.1em;
+    }
+}
