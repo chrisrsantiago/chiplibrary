@@ -6,6 +6,7 @@ import whoosh
 import whoosh.fields
 import whoosh.index
 from whoosh import writing, scoring
+from whoosh.analysis import StopFilter
 from whoosh.qparser import OperatorsPlugin, MultifieldParser
 from whoosh.filedb.filestore import FileStorage
 from pyramid.settings import asbool
@@ -169,12 +170,16 @@ class Library(object):
         )
         parser.replace_plugin(operators)
         query = parser.parse(term)
-        searcher = self.index.searcher()
-        results = searcher.search(query, limit=limit)
+        results = []
+        try:
+            searcher = self.index.searcher()
+            results = searcher.search(query, limit=limit)
 
-        if not results and not fuzzy:
-            # Try a Fuzzy Search.
-            return self.lookup(term, fuzzy=True, limit=self.FUZZY_LIMIT)
+            if not results and not fuzzy:
+                # Try a Fuzzy Search.
+                return self.lookup(term, fuzzy=True, limit=self.FUZZY_LIMIT)
+        except IndexError:
+            pass
             
         return results
         

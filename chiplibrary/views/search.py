@@ -28,7 +28,7 @@ def index(request):
             if form.classification.data:
                 search_params.append(
                    'classification:(%s)' % 
-                   (' '.join([form.classification.data]))
+                   (' '.join(form.classification.data))
                 )
 
             if form.game.data:
@@ -145,6 +145,6 @@ def autocomplete(request):
                 )
             })
 
-    except (KeyError, NoResultFound):
+    except KeyError:
         pass
     return results
