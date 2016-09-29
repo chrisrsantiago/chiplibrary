@@ -31,7 +31,7 @@ def includeme(config):
     add_route(config, 'chip_index_game', '/chips/bn{game:\d+}')
 
     add_route(config, 'chip_view_game', '/chips/bn{game:\d+}/{name}')
-    add_route(config, 'chip_view', '/chips/{name}')
+    #add_route(config, 'chip_view', '/chips/{name}')
 
     add_route(config, 'element_index', '/elements')
     add_route(config, 'element_view', '/elements/{name}')

@@ -29,7 +29,7 @@ def index_game(request):
                 cached_bits
             ) \
             .all()
-    except NoResultFound:
+    except (ValueError, NoResultFound):
         pass
     
     classifications = True
@@ -46,7 +46,7 @@ def index_game(request):
         'settings': {'classifications': classifications, 'size': size}
     }
     
-@view_config(route_name='chip_view', renderer='../templates/chip/view.mako')
+#@view_config(route_name='chip_view', renderer='../templates/chip/view.mako')
 def view(request):
     try:
         result = request.dbsession.query(Chip) \
@@ -60,9 +60,8 @@ def view(request):
             .all()
     except (NoResultFound):
         raise HTTPNotFound()
-    return {
-        'chip': result
-    }
+        
+    return {'chip': result}
 
 @view_config(route_name='chip_view_game', renderer='../templates/chip/view.mako')
 def view_game(request):
@@ -77,10 +76,7 @@ def view_game(request):
                 cached_bits
             ) \
             .one()
-    except (NoResultFound):
+    except (ValueError, NoResultFound):
         raise HTTPNotFound()
         
-    return {
-        'chip': result,
-        'settings': {}
-    }
+    return {'chip': result, 'settings': {}}
