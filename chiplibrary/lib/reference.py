@@ -74,7 +74,7 @@ class Version(enum.IntEnum):
 
 ElementTuple = namedtuple('ElementTuple', 'name introduced weakness strength')
 elements = {
-    'aqua': ElementTuple('aqua', '1', 'electric', 'aqua'),
+    'aqua': ElementTuple('aqua', '1', 'electric', 'fire'),
     'breaking': ElementTuple('breaking', '4', 'cursor', 'sword'),
     'cursor': ElementTuple('cursor', '4', 'wind', 'breaking'),
     'electric': ElementTuple('electric', '1', 'wood', 'aqua'),
