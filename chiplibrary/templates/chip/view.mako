@@ -7,6 +7,13 @@
     <div class="left ${chip.classification.name | str.lower}">
     <div class="image"><img src="${h.chipimg(chip, request)}" alt="${chip.name}"></div>
     <dl>
+        <dt>Names</dt>
+        <dd>
+            <ul>
+                <li>English: ${chip.name}</li>
+                <li>Japanese: ${chip.name_jp}</li>
+            </ul>
+        </dd>
         <dt>Codes</dt>
         <dd>
             <ul>
@@ -56,6 +63,13 @@
     
     <div class="extended right">
         <dl>
+            <dt>Indices</dt>
+            <dd>
+                <ul>
+                    <li><abbr title="The number seen in the chip library">Library</abbr>: ${chip.indice}</li>
+                    <li><abbr title="Development purposes">In-game</abbr>: ${chip.indice_game}</li>
+                </ul>
+            </dd>
             <dt>Game</dt>
             <dd><a href="${request.route_path('chip_index_game', game=chip.game.value)}">Battle Network ${chip.game.value}</a></dd>
             <dt>Rarity</dt>

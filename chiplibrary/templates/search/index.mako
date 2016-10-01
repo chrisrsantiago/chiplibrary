@@ -17,7 +17,7 @@
             <div class="column">
             <h3>Essential</h3>
             % for field in form:
-                % if field.name in ('name'):
+                % if field.name in ('name', 'name_jp'):
                     <p>${field.label} <a class="help ${field.name}">Help</a> <br> ${field} </p>
                 % endif
             % endfor
@@ -32,7 +32,7 @@
             
             <div class="column">
                 % for field in form:
-                    % if field.name in ('size', 'classification', 'element'):
+                    % if field.name in ('indice', 'indice_game', 'size', 'classification', 'element', 'code'):
                     <p>${field.label.text} <a class="help ${field.name}">Help</a></p>
                     ${field}
                     % endif

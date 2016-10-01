@@ -35,7 +35,9 @@ class FuzzyTerm(whoosh.query.FuzzyTerm):
 class ChipSchema(whoosh.fields.SchemaClass):
     id = whoosh.fields.ID(sortable=True, stored=True)
     indice = whoosh.fields.ID(sortable=True, stored=True)
+    indice_game = whoosh.fields.ID(sortable=True, stored=True)
     name = whoosh.fields.ID
+    name_jp = whoosh.fields.ID
     name_display = whoosh.fields.ID(sortable=True, stored=True)
     game = whoosh.fields.ID(sortable=True, stored=True)
     game_enum = whoosh.fields.STORED
@@ -110,7 +112,9 @@ class Library(object):
             writer.add_document(
                 id=str(chip.id),
                 indice=str(chip.indice),
+                indice_game=str(chip.indice_game),
                 name=chip.name.lower(),
+                name_jp=chip.name_jp,
                 name_display=chip.name,
                 game=chip.game.name.lower(),
                 game_enum=chip.game,
@@ -140,7 +144,10 @@ class Library(object):
             limit = self.RESULTS_LIMIT
 
         fields = (
+            'indice',
+            'indice_game',
             'name',
+            'name_jp',
             'game',
             'version',
             'classification',

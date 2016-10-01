@@ -16,6 +16,16 @@ def index(request):
         if form.validate():
             search_params = []
             
+            if form.indice.data:
+                search_params.append(
+                    'indice:%s' % (form.indice.data)
+                )
+
+            if form.indice_game.data:
+                search_params.append(
+                    'indice_game:%s' % (form.indice_game.data)
+                )
+
             if form.name.data:
                 # Since this view shares the same code as the top search bar,
                 # it's important that we don't limit the query too much by
@@ -25,6 +35,11 @@ def index(request):
                 else:
                     search_params.append('%s' % (form.name.data))
 
+            if form.name_jp.data:
+                search_params.append(
+                    'name_jp:%s' % (form.name_jp.data)
+                )
+                
             if form.classification.data:
                 search_params.append(
                    'classification:(%s)' % 
@@ -108,43 +123,39 @@ def autocomplete(request):
     """JSON representation of all battlechips, for use with autocomplete.
     """
     results = []
-    try:
-        term = request.GET['term']
-        lookup = request.library.lookup(
-            term,
-            limit=request.library.SUGGESTIONS_LIMIT
-        )
+    term = request.GET.get('term')
+    lookup = request.library.lookup(
+        term,
+        limit=request.library.SUGGESTIONS_LIMIT
+    )
+    
+    if not lookup:
+        return {}
         
-        if not lookup:
-            return {}
-            
-        for result in lookup:
-            icon = chipimg(
-                {
-                    'indice': result['indice'],
-                    'name': result['name_display'],
-                    'game': result['game_enum'],
-                    'classification': result['classification_enum'],
-                    'version': result.get('version_enum', None)
-                },
-                request
+    for result in lookup:
+        icon = chipimg(
+            {
+                'indice': result['indice'],
+                'name': result['name_display'],
+                'game': result['game_enum'],
+                'classification': result['classification_enum'],
+                'version': result.get('version_enum', None)
+            },
+            request
+        )
+        results.append({
+            'id': result['indice'],
+            'label': result['name_display'],
+            'value': '%s:%s' % (
+                result['name_display'],
+                result['game']
+            ),
+            'game': result['game'].upper(),
+            'icon': icon,
+            'url': request.route_path(
+                'chip_view_game',
+                name=result['name_display'],
+                game=result['game'].lower()
             )
-            results.append({
-                'id': result['indice'],
-                'label': result['name_display'],
-                'value': '%s:%s' % (
-                    result['name_display'],
-                    result['game']
-                ),
-                'game': result['game'].upper(),
-                'icon': icon,
-                'url': request.route_path(
-                    'chip_view',
-                    name=result['name_display'],
-                    game=result['game'].lower()
-                )
-            })
-
-    except KeyError:
-        pass
+        })
     return results

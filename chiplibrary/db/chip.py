@@ -39,26 +39,38 @@ class Chip(Base):
         Integer,
         nullable=False,
         default=0,
-        doc=u'''The in-game number for the chip.  Some chips do not have
+        doc='''The library number for the chip.  Some chips do not have
         an indice as a result of not being officially
         obtainable in the games.'''
+    )
+    indice_game = Column(
+        Integer,
+        nullable=True,
+        default=0,
+        doc='''The in-game number for the chip.  Same rules as
+        `Chip.indice`.'''
     )
     game = Column(
         Enum(Game),
         nullable=False,
-        doc=u'''The game where the chip is from.'''
+        doc='''The game where the chip is from.'''
     )
     version = Column(
         Enum(Version),
         nullable=True,
-        doc=u'''Post MMBN2, each MMBN game had version-exclusive chips,
+        doc='''Post MMBN2, each MMBN game had version-exclusive chips,
         so we are accounting for those.  In the case that the chip is not
         version is exclusive, this may be left blank.'''
     )
     name = Column(
         Unicode(50),
         nullable=False,
-        doc=u'The in-game name for the chip.'
+        doc='The in-game name for the chip.'
+    )
+    name_jp = Column(
+        Unicode(50),
+        nullable=True,
+        doc='The in-game name for the chip (Japanese).'
     )
     codes = relationship(
         lambda: ChipCode,
@@ -67,7 +79,7 @@ class Chip(Base):
     classification = Column(
         Enum(Classification),
         nullable=True,
-        doc=u'''The in-game classification of a chip (standard, mega, etc.)
+        doc='''The in-game classification of a chip (standard, mega, etc.)
         Valid chip types can be found in the Classifications Enum.'''
     )
     effects = relationship(
@@ -77,76 +89,76 @@ class Chip(Base):
     element = Column(
         Enum(Element),
         nullable=False,
-        doc=u'''The element for the chip, can be any element found in Elements
+        doc='''The element for the chip, can be any element found in Elements
         enum.'''
     )
     size = Column(
         Integer,
-        nullable=False,
+        nullable=True,
         default=0,
-        doc=u'The size (in MB) of the chip, from 1-99'
+        doc='The size (in MB) of the chip, from 1-99'
     )
     description = Column(
         UnicodeText(255, convert_unicode=True),
         nullable=False,
-        doc=u'The in-game description for the chip.'
+        doc='The in-game description for the chip.'
     )
     summary = Column(
         UnicodeText(convert_unicode=True),
         nullable=True,
-        doc=u'A more detailed explanation of what the battlechip does.'
+        doc='A more detailed explanation of what the battlechip does.'
     )
     rarity = Column(Integer,
         nullable=False,
         default=1,
-        doc=u'''The amount of stars (rarity) of a chip, from 1-5.'''
+        doc='''The amount of stars (rarity) of a chip, from 1-5.'''
     )
     damage_min = Column(
         Integer,
         nullable=False,
         default=0,
-        doc=u'The amount of damage the chip deals by itself. (Minimum)'
+        doc='The amount of damage the chip deals by itself. (Minimum)'
     )
     damage_max = Column(
         Integer,
         nullable=False,
         default=0,
-        doc=u'The amount of damage the chip deals by itself. (Maximum)'
+        doc='The amount of damage the chip deals by itself. (Maximum)'
     )
     recovery = Column(
         Integer,
         nullable=False,
         default=0,
-        doc=u'If a recovery chip, the amount of HP recovered.'
+        doc='If a recovery chip, the amount of HP recovered.'
     )
     
     __table_args__ = (
         UniqueConstraint('name', 'game', name='chip'),
     )
     
-    def __init__(self, indice='', game='', version='', name='',
-        classification='', element='', size=0, description='',
-        summary='', rarity=0, damage_min=0, damage_max=0, recovery=0
+    def __init__(self, indice=None, indice_game=None, game=None, version=None,
+        name=None, name_jp=None, classification='', element=None, size=None,
+        description=None, summary=None, rarity=None, damage_min=None,
+        damage_max=None, recovery=None
     ):
         self.indice = indice
+        self.indice_game = indice_game
         self.game = game
         self.version = version
         self.name = name
+        self.name_jp = name_jp
         self.classification = classification
         self.element = element
         self.size = size
         self.description = description
         self.summary = summary
-        if rarity > 0:
-            self.rarity = 5
-        else:
-            self.rarity = rarity
+        self.rarity = rarity
         self.damage_min = damage_min
         self.damage_max = damage_max
         self.recovery = recovery
         
     def __repr__(self):
-        return u'<Chip: #%s - %s - %s>' % (self.indice, self.name, self.game)
+        return '<Chip: #%s - %s - %s>' % (self.indice, self.name, self.game)
 
     def codes_iter(self):
         return [code.code for code in self.codes]
@@ -164,7 +176,7 @@ class _ChipBase(object):
     game = Column(
         Enum(Game),
         nullable=False,
-        doc=u'''The game where the chip is from'''
+        doc='''The game where the chip is from'''
     )
     
     @declared_attr
@@ -174,7 +186,7 @@ class _ChipBase(object):
             ForeignKey(Chip.id),
             nullable=False,
             default='',
-            doc=u'''See `chiplibrary.models.chip.Chip` for more information'''
+            doc='''See `chiplibrary.models.chip.Chip` for more information'''
         )
 
 ChipBase = declarative_base(metadata=metadata, cls=_ChipBase)
@@ -185,7 +197,7 @@ class ChipCode(ChipBase):
     code = Column(
         Unicode(1),
         nullable=False,
-        doc=u'''The chip code for said battlechip.  Varies between games, and
+        doc='''The chip code for said battlechip.  Varies between games, and
         a chip can contain as many as six different chip codes.  The possible
         values are the letters A-Z, or a wildcard (*).'''
     )
@@ -194,12 +206,12 @@ class ChipCode(ChipBase):
         UniqueConstraint('id_chip', 'code', 'game', name='chip_code'),
     )
     
-    def __init__(self, id_chip, code='', game=''):
+    def __init__(self, id_chip, code=None, game=None):
         # Possible chip codes: A-Z or * (wildcard symbol)
         code = code.upper()
         CODES = list(string.ascii_uppercase)
         CODES.append('*')
-        if code not in CODES:
+        if not code in CODES:
             raise Exception(
                 'Invalid Chip Code: %s.  Only A-Z and * allowed.' % (code)
             )
@@ -208,30 +220,32 @@ class ChipCode(ChipBase):
         self.game = game
         
     def __repr__(self):
-        return u'<ChipCode: #(%s) - %s - %s>' % (self.id_chip, self.code, self.game)
+        return '<ChipCode: #(%s) - %s - %s>' % (self.id_chip, self.code, self.game)
 
 class ChipEffects(ChipBase):
     __tablename__ = 'chip_effects'
     
     flinch = Column(Boolean, nullable=False,
-        doc=u'''Whether chip causes flinching (flickering player visibility
+        doc='''Whether chip causes flinching (flickering player visibility
         back and forth.)'''
     )
     timestop = Column(Boolean, nullable=False,
-        doc=u'Whether chip freezes the battle temporarily (i.e. Navi chips)'
+        doc='Whether chip freezes the battle temporarily (i.e. Navi chips)'
     )
     paralyze = Column(Boolean, nullable=False,
-        doc=u'Whether chip causes paralysis, usually from elec element chips.'
+        doc='Whether chip causes paralysis, usually from elec element chips.'
     )
     push = Column(Boolean, nullable=False,
-        doc=u'Whether chip pushes the player back.'
+        doc='Whether chip pushes the player back.'
     )
     
     __table_args__ = (
         UniqueConstraint('id_chip', 'game', name='chip_effects'),
     )
     
-    def __init__(self, game='', flinch='', timestop='', paralyze='', push=''):
+    def __init__(self, game=None, flinch=None, timestop=None, paralyze=None,
+        push=None
+    ):
         self.game = game
         self.flinch = flinch
         self.timestop = timestop
@@ -239,7 +253,7 @@ class ChipEffects(ChipBase):
         self.push = push
         
     def __repr__(self):
-        return u'<ChipEffects: #(%s) - %s>' % (self.id_chip, self.game)
+        return '<ChipEffects: #(%s) - %s>' % (self.id_chip, self.game)
 
 cached_bits = RelationshipCache(Chip.codes, 'default') \
     .and_(

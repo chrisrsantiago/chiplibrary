@@ -65,18 +65,26 @@ def main(argv=sys.argv):
             except IndexError:
                 damage_max = damage_min
 
-            chip = Chip(indice=c.find('indice').text,
+            try:
+                size = int(c.find('size').text)
+            except TypeError:
+                size = 0
+
+            chip = Chip(
+                indice=c.find('indice').text,
+                indice_game=c.find('indice_game').text,
                 game=c.find('game').text,
                 version=c.find('version').text,
                 name=c.find('name').text,
+                name_jp=c.find('name_jp').text,
                 classification=c.find('classification').text,
                 element=c.find('element').text,
-                size=c.find('size').text,
+                size=size,
                 description=c.find('description').text,
                 summary='',
-                rarity=c.find('rarity').text,
-                damage_min=damage_min,
-                damage_max=damage_max,
+                rarity=int(c.find('rarity').text),
+                damage_min=int(damage_min),
+                damage_max=int(damage_max),
                 recovery=0
             )
             dbsession.add(chip)

@@ -21,6 +21,23 @@ class MultiCheckboxField(SelectMultipleField):
     option_widget = widgets.CheckboxInput()
 
 class SearchForm(Form):
+    indice = StringField(
+        'Indice',
+        description='''The chip indice.  This is the number that appears
+        when viewing the game in the chip library.''',
+        validators=[
+            validators.optional()
+        ]
+    )
+    indice_game = IntegerField(
+        'Indice (Game)',
+        description='''The in-game chip indice.  This is NOT the same as the
+        regular chip indice.  This data is more for development/meta purposes.
+        ''',
+        validators=[
+            validators.optional()
+        ]
+    )
     name = StringField(
         'Name',
         description='''The chip name.  All are case-insensitive, unless
@@ -30,6 +47,18 @@ class SearchForm(Form):
             validators.Length(
                 min=2,
                 message='Chip name must be at least %(min)d characters.'
+            )
+        ]
+    )
+    name_jp = StringField(
+        'Name (Japanese)',
+        description='''The chip name (Japanese).''',
+        validators=[
+            validators.optional(),
+            validators.Length(
+                min=2,
+                message='''Chip name (Japanese) must be at least %(min)d 
+                characters.'''
             )
         ]
     )
