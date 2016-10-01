@@ -69,8 +69,9 @@ class Version(enum.IntEnum):
     bluemoon = 4
     colonel = 5
     protoman = 6
-    gregar = 7
-    falzar = 8
+    doubleteam = 7
+    gregar = 8
+    falzar = 9
 
 ElementTuple = namedtuple('ElementTuple', 'name introduced weakness strength')
 elements = {
