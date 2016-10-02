@@ -13,7 +13,6 @@ from pyramid.settings import asbool
 
 from ..db import Chip
 
-
 class FuzzyTerm(whoosh.query.FuzzyTerm):
      def __init__(self,
         fieldname,
@@ -125,7 +124,7 @@ class Library(object):
                 element=chip.element.name,
                 element_enum=chip.element,
                 description=chip.description,
-                code=u','.join(chip.codes_iter()).lower(),
+                code=','.join(chip.codes_iter()).lower(),
                 size=str(chip.size),
                 damage_min=str(chip.damage_min),
                 damage_max=str(chip.damage_max),

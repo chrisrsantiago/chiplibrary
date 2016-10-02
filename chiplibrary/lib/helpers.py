@@ -33,7 +33,7 @@ def chipimg(chip, request):
     else:
         classification = chip.classification.name[:1]
 
-    filename = u''.join([classification, str(chip.indice), version])
+    filename = ''.join([classification, str(chip.indice), version])
 
     return request.static_path(
         'chiplibrary:static/images/chips/%s/%s.gif' % (chip.game.name, filename)
