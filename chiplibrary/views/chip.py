@@ -9,6 +9,8 @@ from ..db import Chip
 from ..db.cache import FromCache
 from ..db.chip import cached_bits
 
+import urllib.parse
+
 @view_config(route_name='chip_index', renderer='../templates/chip/index.mako')
 def index(request):
     return {
@@ -56,7 +58,7 @@ def view(request):
         chip_query = request.dbsession.query(Chip)
         chip_query = chip_query.filter(
             Chip.game == game,
-            Chip.name == request.matchdict['name']
+            Chip.name == urllib.parse.unquote(request.matchdict['name'])
         )
         chip_query = chip_query.options(
             FromCache('default'),

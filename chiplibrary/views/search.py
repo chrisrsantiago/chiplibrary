@@ -4,6 +4,8 @@ from pyramid.view import view_config
 from ..lib.helpers import chipimg
 from ..lib.forms import SearchForm
 
+import urllib.parse
+
 @view_config(
     route_name='search_index',
     renderer='../templates/search/index.mako'
@@ -33,7 +35,7 @@ def index(request):
                 if form.search_advanced.data:
                     search_params.append('name:%s' % (form.name.data))
                 else:
-                    search_params.append('%s' % (form.name.data))
+                    search_params.append('%s' % (urllib.parse.unquote(form.name.data)))
 
             if form.name_jp.data:
                 search_params.append(
@@ -123,7 +125,7 @@ def autocomplete(request):
     """JSON representation of all battlechips, for use with autocomplete.
     """
     results = []
-    term = request.GET.get('term')
+    term = urllib.parse.unquote(request.GET.get('term', ''))
     lookup = request.library.lookup(
         term,
         limit=request.library.SUGGESTIONS_LIMIT
