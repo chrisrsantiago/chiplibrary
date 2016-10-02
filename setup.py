@@ -34,7 +34,7 @@ tests_require = [
     ]
 
 setup(name='chiplibrary',
-      version='1.2.0',
+      version='1.2.1',
       description='chiplibrary',
       long_description=README,
       classifiers=[

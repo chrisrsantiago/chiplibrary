@@ -16,21 +16,24 @@ def index(request):
         'settings': {'classifications': False},
     }
 
-@view_config(route_name='chip_index_game', renderer='../templates/chip/index.mako')
+@view_config(
+    route_name='chip_index_game',
+    renderer='../templates/chip/index.mako'
+)
 def index_game(request):
     result = []
     try:
         game = Game(int(request.matchdict['game']))
-        result = request.dbsession.query(Chip) \
-            .filter(Chip.game == game) \
-            .options(
-                FromCache('default'),
-                joinedload(Chip.codes),
-                cached_bits
-            ) \
-            .all()
+        query = request.dbsession.query(Chip)
+        query = query.filter(Chip.game == game)
+        query = query.options(
+            FromCache('default'),
+            joinedload(Chip.codes),
+            cached_bits
+        )
+        result = query.all()
     except (ValueError, NoResultFound):
-        pass
+        raise HTTPNotFound()
     
     classifications = True
     size = True
@@ -45,38 +48,40 @@ def index_game(request):
         'chips': result,
         'settings': {'classifications': classifications, 'size': size}
     }
-    
-#@view_config(route_name='chip_view', renderer='../templates/chip/view.mako')
+
+@view_config(route_name='chip_view', renderer='../templates/chip/view.mako')
 def view(request):
     try:
-        result = request.dbsession.query(Chip) \
-            .filter(Chip.name == request.matchdict['name']) \
-            .order_by(Chip.game.asc()) \
-            .options(
-                FromCache('default'),
-                joinedload(Chip.codes),
-                cached_bits
-            ) \
-            .all()
-    except (NoResultFound):
-        raise HTTPNotFound()
-        
-    return {'chip': result}
-
-@view_config(route_name='chip_view_game', renderer='../templates/chip/view.mako')
-def view_game(request):
-    try:
         game = Game(int(request.matchdict['game']))
-        result = request.dbsession.query(Chip) \
-            .filter(Chip.game == game) \
-            .filter(Chip.name == request.matchdict['name']) \
-            .options(
+        chip_query = request.dbsession.query(Chip)
+        chip_query = chip_query.filter(
+            Chip.game == game,
+            Chip.name == request.matchdict['name']
+        )
+        chip_query = chip_query.options(
+            FromCache('default'),
+            joinedload(Chip.codes),
+            cached_bits
+        )
+        chip_result = chip_query.one()
+        # Query the database for battlechips having identical names in other
+        # games in case the user might want to compare chips.
+        othergames_result = []
+        try:
+            othergames_query = request.dbsession.query(Chip)
+            othergames_query = othergames_query.filter(
+                Chip.name == chip_result.name,
+                Chip.game != chip_result.game
+            )
+            othergames_query = othergames_query.options(
                 FromCache('default'),
-                joinedload(Chip.codes),
                 cached_bits
-            ) \
-            .one()
+            )
+            othergames_query = othergames_query.order_by(Chip.game.asc())
+            othergames_result = othergames_query.all()
+        except NoResultFound:
+            pass
     except (ValueError, NoResultFound):
         raise HTTPNotFound()
         
-    return {'chip': result, 'settings': {}}
+    return {'chip': chip_result, 'othergames': othergames_result}

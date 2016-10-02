@@ -33,13 +33,55 @@ div.chip-view {
         &.recovery {
             color: $recovery-color;
         }
+
+        &.othergames {
+            ul {
+                list-style: none;
+                padding: 0;
+            }
+
+            /* Scale the image so that they're all uniform in width. */
+            li img {
+                width: 56px;
+                height: auto;
+            }
+
+            li a {
+                border: none;
+                display: block;
+                
+                &:hover {
+                    background: #e9e9e9;
+                    border: none;
+                }
+                
+                span {
+                    bottom: 1em;
+                    position: relative;
+                }
+            }
+        }
+        
+        &.names {
+            ul {
+               li.en {
+                    list-style-image: url('/static/images/site/famfamfam/flags/us.png');
+                    list-style-position:outside;
+                }
+
+                li.jp {
+                    list-style-image: url('/static/images/site/famfamfam/flags/jp.png');
+                    list-style-position:outside;
+                }
+            }
+        }
     }
 
     div.image {
         margin: auto;
         padding: 0;
-        width: 64px;
-        height: 56px;
+        max-width: 64px;
+        max-height: 56px;
     }
 
     div.extended {

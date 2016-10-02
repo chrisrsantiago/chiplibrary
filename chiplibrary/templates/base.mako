@@ -5,7 +5,7 @@
 
     <meta name="description" content="${self.meta_description() | str.strip}">
 
-    <link rel="search" type="application/opensearchdescription+xml" title="Chip Library" href="${request.static_path('chiplibrary:static/opensearch.xml')}">
+    <link rel="self" type="application/opensearchdescription+xml" title="Chip Library" href="${request.static_path('chiplibrary:static/opensearch.xml')}">
     
     <link rel="apple-touch-icon" sizes="57x57" href="${request.static_path('chiplibrary:static/images/site/icons/apple-icon-57x57.png')}">
     <link rel="apple-touch-icon" sizes="60x60" href="${request.static_path('chiplibrary:static/images/site/icons/apple-icon-60x60.png')}">
@@ -32,6 +32,8 @@
     % for script in ('jquery-3.0.0.min', 'jquery-ui.min', 'search'):
     <script src="${request.static_path('chiplibrary:static/js/%s.js' % (script,))}" type="text/javascript"></script>
     % endfor
+    
+    <%include file="widget/meta.mako"/>
 </head>
 <body>
 <div class="fixed">

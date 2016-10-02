@@ -153,7 +153,7 @@ def autocomplete(request):
             'game': result['game'].upper(),
             'icon': icon,
             'url': request.route_path(
-                'chip_view_game',
+                'chip_view',
                 name=result['name_display'],
                 game=result['game'].lower()
             )

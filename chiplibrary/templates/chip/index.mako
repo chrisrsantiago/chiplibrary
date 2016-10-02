@@ -18,9 +18,6 @@
     % endfor
     </ul>
     <% return STOP_RENDERING %>
-% elif not chips:
-    <p>No results found.</p>
-    <% return STOP_RENDERING %>
 % endif
 
 <table class="battlechips sortable">
@@ -59,7 +56,7 @@
         <tr>
             <td class="indice">${chip.indice}</td>
             <td><img src="${h.chipimg(chip, request)}" alt="${chip.name}"></td>
-            <td><a href="${request.route_path('chip_view_game', game=chip.game.value, name=chip.name)}">${chip.name}</a>
+            <td><a href="${request.route_path('chip_view', game=chip.game.value, name=chip.name)}">${chip.name}</a>
             </td>
             <td><a href="${request.route_path('element_view', name=chip.element.name)}" title="${chip.element.name | str.title}"><img src="${request.static_path('chiplibrary:static/images/elements/%s.png' % (chip.element.name))}" alt="${chip.element.name}"></a></td>
             <td class="damage">
