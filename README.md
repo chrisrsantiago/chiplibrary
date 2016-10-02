@@ -7,7 +7,7 @@ chiplibrary is a personal project of mine that attempts to create a comprehensiv
 
 To see chiplibrary in action, check the official website:
 
-[http://chips.nachtara.com/](http://chips.nachtara.com/)
+[http://chiplibrary.net/](http://chiplibrary.net/)
 
 Any and all bug reports should be submitted via the [https://github.com/chrisrsantiago/chiplibrary/issues](Issues) tab on the official Github.
 

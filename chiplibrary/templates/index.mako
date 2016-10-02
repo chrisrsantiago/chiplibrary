@@ -9,6 +9,7 @@
 <div class="clear"></div>
 <h2>Latest Updates</h2>
 <ul>
+    <li><strong>10/02/16</strong>: chiplibrary.net is now the official URL to accessing the website.  If you are using the old url (chips.nachtara.com,) your browser will automatically redirect you to the new website.</li>
     <li><strong>10/01/16</strong>: Thanks to Tterraj42 and cheeseandcereal, Japanese names are available for a select few chips.</li>
     <li><strong>9/28/16</strong>: <a href="${request.route_path(route_name='search_index')}" title="Search">Search feature</a> has been re-done, and an advanced search functionality is also available to help further narrow searches.</li>
     <li><strong>9/27/16</strong>: Revamped site layout.</li>

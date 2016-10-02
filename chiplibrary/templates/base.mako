@@ -80,7 +80,7 @@
     </div>
     <h1>${self.title_header()}</h1>
 ${self.body()}
-    <div class="footer">Copyright &copy; Chris Santiago.  Mega Man is a registered trademark of Capcom.</div> 
+    <div class="footer">Copyright &copy; <a href="http://nachtara.com/" title="Chris Santiago">Chris Santiago</a>.  Mega Man is a registered trademark of Capcom.</div> 
 </div> 
 </body>
 </html>
