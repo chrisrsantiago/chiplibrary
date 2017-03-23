@@ -1,28 +1,37 @@
 # -*- coding: utf-8 -*-
+import urllib.parse
+
 from pyramid.view import view_config
 from pyramid.httpexceptions import HTTPNotFound
 from sqlalchemy.orm import joinedload
 from sqlalchemy.orm.exc import NoResultFound
 
-from ..lib.reference import Game
 from ..db import Chip
 from ..db.cache import FromCache
 from ..db.chip import cached_bits
 
-import urllib.parse
+from ..lib.reference import Game
 
-@view_config(route_name='chip_index', renderer='../templates/chip/index.mako')
-def index(request):
-    return {
-        'result': [],
-        'settings': {'classifications': False},
-    }
+@view_config(route_name='game', renderer='../templates/game/index.mako')
+def index_game(request):
+    return {}
 
 @view_config(
-    route_name='chip_index_game',
+    route_name='chip_index',
     renderer='../templates/chip/index.mako'
 )
-def index_game(request):
+def index(request):
+    settings = {
+        'classifications': True,
+        'size': True,
+    }
+
+    if request.matchdict['game'] in ('1', '2'):
+        settings['classifications'] = False
+
+        if request.matchdict['game'] == '1':
+            settings['size'] = False
+
     result = []
     try:
         game = Game(int(request.matchdict['game']))
@@ -37,18 +46,9 @@ def index_game(request):
     except (ValueError, NoResultFound):
         raise HTTPNotFound()
     
-    classifications = True
-    size = True
-
-    if request.matchdict['game'] in ('1', '2'):
-        classifications = False
-        
-        if request.matchdict['game'] == '1':
-            size = False
-    
     return {
         'chips': result,
-        'settings': {'classifications': classifications, 'size': size}
+        'settings': settings
     }
 
 @view_config(route_name='chip_view', renderer='../templates/chip/view.mako')

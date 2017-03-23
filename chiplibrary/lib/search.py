@@ -56,7 +56,7 @@ class ChipSchema(whoosh.fields.SchemaClass):
     
 class Library(object):
 
-    RESULTS_LIMIT = 50
+    RESULTS_LIMIT = 700
     FUZZY_LIMIT = 5
     SUGGESTIONS_LIMIT = 5
     
@@ -78,9 +78,15 @@ class Library(object):
         self.setindex()
         
         if self.rebuild:
+            self.setindex()
             self.buildindex()
+        else:
+            self.setindex()
 
     def setindex(self):
+        if self.rebuild and os.path.exists(self.directory):
+            shutil.rmtree(self.directory)
+
         if not os.path.exists(self.directory):
             os.mkdir(self.directory)
 
@@ -191,11 +197,6 @@ class Library(object):
         
 def includeme(config):
     settings = config.get_settings()
-    library = Library(config.registry['dbsession_factory'](), **settings)
+    library = Library(config.registry['dbsession_factory'], **settings)
     
-    config.add_request_method(
-        # r.tm is the transaction manager used by pyramid_tm
-        lambda l: library,
-        'library',
-        reify=True
-    )
+    config.add_request_method(lambda l: library, 'library', reify=True)

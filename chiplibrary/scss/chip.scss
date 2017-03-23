@@ -9,16 +9,6 @@ div.chip-view {
         border: none;
     }
 
-    div.left {
-        float: left;
-        width: 48%;
-    }
-
-    div.right {
-        float: right;
-        width: 48%;
-    }
-
     dd {
         @each $classification, $color in $classifications {
             &.#{$classification} {
@@ -86,7 +76,7 @@ div.chip-view {
 
     div.extended {
         position: relative;
-        margin-left: 20px;
+        margin-left: 1.250em;
     }
 
     dl {
@@ -124,7 +114,7 @@ table.battlechips {
     border-spacing: 0;
     border-collapse: collapse;
     width: 100%;
-    margin: 10px 0 10px 0;
+    margin: 0.625em 0 0.625em 0;
 
     col {
         &.indice {
@@ -172,7 +162,7 @@ table.battlechips {
     th {
         background-color: #204A76;
         color: white;
-        padding: 5px;
+        padding: .5em;
         text-align: left;
         text-decoration: none;
     }

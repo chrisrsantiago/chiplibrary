@@ -1,26 +1,8 @@
 <%inherit file="../base.mako"/>
+<%def name="title()">Chips: Battle Network ${request.matchdict['game']}</%def>
+<%def name="title_breadcrumb()">Chips</%def>
 
-<%def name="title()">
-% if 'game' in request.matchdict:
-    Chips: Battle Network ${request.matchdict['game']}
-% else:
-    Chips
-% endif
-</%def>
-
-% if not 'game' in request.matchdict:
-    <p>Pick a game!</p>
-    % for game in range(1,7):
-        <a href="${request.route_path('chip_index_game', game=game)}" title="Battle Network ${game}" class="noborder"><img src="${request.static_path('chiplibrary:static/images/titles/bn%s.gif' % (game,))}" alt="Battle Network ${game}"></a>
-        % if game == 3:
-            <br>
-        % endif
-    % endfor
-    </ul>
-    <% return STOP_RENDERING %>
-% endif
-
-<table class="battlechips sortable">
+<table class="battlechips">
     <colgroup>
         <col class="indice">
         <col class="image">
@@ -32,6 +14,7 @@
         % if settings['size']:
         <col class="size">
         % endif
+        <col class="rarity">
         % if settings['classifications']:
         <col class="classification">
         % endif
@@ -40,25 +23,26 @@
     <tr>
         <th class="indice">#</th>
         <th></th>
-        <th>Name</th>
-        <th>Element</th>
-        <th>Damage</th>
-        <th>Recovery</th>
-        <th>Code(s)</th>
+        <th class="name">Name</th>
+        <th class="element">Element</th>
+        <th class="damage">Damage</th>
+        <th class="recovery">Recovery</th>
+        <th class="codes">Code(s)</th>
         % if settings['size']:
-        <th>Size</th>
+        <th class="size">Size</th>
         % endif
+        <th class="rarity">Rarity</th>
         % if settings['classifications']:
-        <th>Classification</th>
+        <th class="classifications">Classification</th>
         % endif
     </tr>
         % for chip in chips:
         <tr>
             <td class="indice">${chip.indice}</td>
-            <td><img src="${h.chipimg(chip, request)}" alt="${chip.name}"></td>
-            <td><a href="${request.route_path('chip_view', game=chip.game.value, name=chip.name)}">${chip.name}</a>
+            <td class="image"><img src="${h.chipimg(chip, request)}" alt="${chip.name}"></td>
+            <td class="name"><a href="${request.route_path('chip_view', game=chip.game.value, name=chip.name)}">${chip.name}</a>
             </td>
-            <td><a href="${request.route_path('element_view', name=chip.element.name)}" title="${chip.element.name | str.title}"><img src="${request.static_path('chiplibrary:static/images/elements/%s.png' % (chip.element.name))}" alt="${chip.element.name}"></a></td>
+            <td class="element"><a href="${request.route_path('search', _query={'element': chip.element.name})}" title="${chip.element.name | str.title}"><img src="${request.static_path('chiplibrary:static/images/elements/%s.png' % (chip.element.name))}" alt="${chip.element.name}"></a></td>
             <td class="damage">
             % if chip.damage_min > 0:
                 ${chip.damage_min}
@@ -76,21 +60,22 @@
                 ${chip.recovery}
             % endif
             </td>
-            <td>
+            <td class="codes">
             % for code in chip.codes_iter():
                 <%
                     comma = ', '
                     if loop.last:
                         comma = ''
                 %>
-                ${code}${comma}
+                <a href="${request.route_path('search', _query={'code': code, 'game': chip.game.name})}" title="Chips with code ${code} for ${chip.game.name | str.upper}">${code}</a>${comma}
             % endfor
             </td>
             % if settings['size']:
-            <td>${chip.size}MB</td>
+            <td class="size">${chip.size}MB</td>
             % endif
+            <td class="rarity"><a href="${request.route_path('search', _query={'rarity': chip.rarity, 'game': chip.game.name})}" title="Chips with rarity of ${chip.rarity}">${'*' * chip.rarity}</td>
             % if settings['classifications']:
-            <td><span class="${chip.classification.name | str.lower}">${chip.classification.name}</span></td>
+            <td class="classifications"><a href="${request.route_path('search', _query={'classification': chip.classification.name, 'game': chip.game.name})}" title="Search for ${chip.classification.name} chips"><span class="${chip.classification.name | str.lower}">${chip.classification.name}</span></a></td>
             % endif
         </tr>
         % endfor

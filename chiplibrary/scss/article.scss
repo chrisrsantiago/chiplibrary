@@ -1,0 +1,32 @@
+div form.article-add {
+    input[type='text'] {
+        width: 20em;
+    }
+
+    textarea {
+        width: 30em;
+        height: 20em;
+    }
+}
+
+div.article {
+    div.written-by {
+        span.date {
+            font-style: italic;
+        }
+    }
+    
+    div.meta {
+        
+    }
+}
+
+div.comments {
+    div.comment {        
+        div.written-by {
+            border-bottom: 1px solid #000;
+            padding: .2em;
+        }
+    }
+    
+}

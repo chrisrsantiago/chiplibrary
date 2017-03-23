@@ -1,52 +1,37 @@
+<%namespace name="functions" file="widget/functions.mako"/>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
     <meta name="description" content="${self.meta_description() | str.strip}">
 
     <link rel="self" type="application/opensearchdescription+xml" title="Chip Library" href="${request.static_path('chiplibrary:static/opensearch.xml')}">
-    
-    <link rel="apple-touch-icon" sizes="57x57" href="${request.static_path('chiplibrary:static/images/site/icons/apple-icon-57x57.png')}">
-    <link rel="apple-touch-icon" sizes="60x60" href="${request.static_path('chiplibrary:static/images/site/icons/apple-icon-60x60.png')}">
-    <link rel="apple-touch-icon" sizes="72x72" href="${request.static_path('chiplibrary:static/images/site/icons/apple-icon-72x72.png')}">
-    <link rel="apple-touch-icon" sizes="76x76" href="${request.static_path('chiplibrary:static/images/site/icons/apple-icon-76x76.png')}">
-    <link rel="apple-touch-icon" sizes="114x114" href="${request.static_path('chiplibrary:static/images/site/icons/apple-icon-114x114.png')}">
-    <link rel="apple-touch-icon" sizes="120x120" href="${request.static_path('chiplibrary:static/images/site/icons/apple-icon-120x120.png')}">
-    <link rel="apple-touch-icon" sizes="144x144" href="${request.static_path('chiplibrary:static/images/site/icons/apple-icon-144x144.png')}">
-    <link rel="apple-touch-icon" sizes="152x152" href="${request.static_path('chiplibrary:static/images/site/icons/apple-icon-152x152.png')}">
-    <link rel="apple-touch-icon" sizes="180x180" href="${request.static_path('chiplibrary:static/images/site/icons/apple-icon-180x180.png')}">
-    <link rel="icon" type="image/png" sizes="192x192"  href="${request.static_path('chiplibrary:static/images/site/icons/android-icon-192x192.png')}">
-    <link rel="icon" type="image/png" sizes="32x32" href="${request.static_path('chiplibrary:static/images/site/icons/favicon-32x32.png')}">
-    <link rel="icon" type="image/png" sizes="96x96" href="${request.static_path('chiplibrary:static/images/site/icons/favicon-96x96.png')}">
-    <link rel="icon" type="image/png" sizes="16x16" href="${request.static_path('chiplibrary:static/images/site/icons/favicon-16x16.png')}">
-
     <link rel="manifest" href="${request.static_path('chiplibrary:static/images/site/icons/manifest.json')}">
-    
+    % for icon in h.favicon():
+    <link rel="${icon.rel}" type="image/png" sizes="${icon.resolution}" href="${request.static_path('chiplibrary:static/images/site/icons/%s%s.png' % (icon.prefix, icon.resolution,))}">
+    % endfor
+
     <title>${self.title()} | chiplibrary</title>
 
-    % for stylesheet in ('global', 'chip', 'search', 'jquery/jquery-ui'):
-    <link href="${request.static_path('chiplibrary:static/css/%s.css' % (stylesheet,))}" rel="stylesheet">
-    % endfor
-      
-    % for script in ('jquery-3.0.0.min', 'jquery-ui.min', 'search'):
+    <link href="${request.static_path('chiplibrary:static/style.css')}" rel="stylesheet">
+    % for script in ('jquery-3.0.0.min', 'jquery-ui.min', 'jquery.sidr.min', 'site'):
     <script src="${request.static_path('chiplibrary:static/js/%s.js' % (script,))}" type="text/javascript"></script>
     % endfor
-    
+
     <%include file="widget/meta.mako"/>
 </head>
 <body>
 <div class="fixed">
+    <%include file="widget/userbar.mako"/>
+    <div class="mobile-menulink">
+        <div class="button left"><a class="menu" href="#menu">Menu</a></div>
+        <div class="button right"><a class="search" href="#search">Search</a></div>
+    </div>
+
     <div class="nav">
         <ul>
-            <li class="home"><a title="Home" href="${request.route_path('index')}">Home</a></li>
-            % for game in (1, 2, 3, 4, 5, 6):
-                <% selected = '' %>
-                % if ''.join(['bn', str(game)]) in request.environ['PATH_INFO']:
-                    <% selected = ' selected' %>
-                % endif
-            <li class="bn${game}${selected}"><a title="Battle Network ${game}" href="${request.route_path('chip_index_game', game=game)}">BN${game}</a></li>
-            % endfor
+        ${functions.nav()}
         </ul>
     </div>
     <ul class="snav">
@@ -60,15 +45,6 @@
     </div>
 </div>
 <div class="content">
-    % if request.session.peek_flash('errors'):
-    <div class="errors">
-        <ul>
-            % for error in request.session.pop_flash('errors'):
-                <li>${error}</li>
-            % endfor
-        </ul>
-    </div>
-    % endif
     <div class="breadcrumbs">
     % for bread in request.bread:
         % if bread['url']:
@@ -78,10 +54,38 @@
         % endif
     % endfor
     </div>
+
     <h1>${self.title_header()}</h1>
+    % if request.session.peek_flash('errors'):
+    <div class="errors">
+        <ul>
+            % for error in request.session.pop_flash('errors'):
+                <li>${error}</li>
+            % endfor
+        </ul>
+    </div>
+    % endif
 ${self.body()}
-    <div class="footer">Copyright &copy; <a href="http://nachtara.com/" title="Chris Santiago">Chris Santiago</a>.  Mega Man is a registered trademark of Capcom.</div> 
-</div> 
+    <div class="footer">
+        <p>Copyright &copy; <a href="http://nachtara.com/" title="Chris Santiago">Chris Santiago</a>.  Mega Man is a registered trademark of Capcom.
+        <div class="affiliates">
+            <a href="http://rockman-exe.com/"><img src="${request.static_path('chiplibrary:static/images/site/affiliates/rmexe.gif')}" alt="RockMan EXE"></a>&nbsp;
+            <a href="http://www.therockmanexezone.com/" title="The Rockman EXE Zone"><img src="${request.static_path('chiplibrary:static/images/site/affiliates/trez.png')}" alt="The Rockman EXE Zone"></a>
+        </div>
+    </div>
+</div>
+
+<div id="sidr-left">
+    <ul>
+    ${functions.nav()}
+    </ul>
+</div>
+
+% if not request.user:
+<div class="login-modal">
+<%include file="widget/login.mako"/>
+</div>
+% endif
 </body>
 </html>
 <%def name="title_header()">${self.title()}</%def>

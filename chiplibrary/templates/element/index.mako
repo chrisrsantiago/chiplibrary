@@ -22,8 +22,8 @@
         % for key, element in r.elements.items():
         <tr>
             <td class="indice"><img src="${request.static_path('chiplibrary:static/images/elements/%s.png' % (element.name,))}" alt="${element.name}"></td>
-            <td><a href="${request.route_path('element_view', name=element.name)}" title="${element.name | str.upper}">${element.name}</a></td>
-            <td><a href="${request.route_path('chip_index_game', game=element.introduced)}" title="Battle Network ${element.introduced.replace('bn', '')}">Battle Network ${element.introduced.replace('bn', '')}</a></td>
+            <td><a href="${request.route_path('search', _query={'element': element.name})}" title="Search for chips with element: ${element.name | str.title}">${element.name}</a></td>
+            <td><a href="${request.route_path('game', game=element.introduced)}" title="Battle Network ${element.introduced.replace('bn', '')}">Battle Network ${element.introduced.replace('bn', '')}</a></td>
             <td>
                 % if element.weakness:
                 <img src="${request.static_path('chiplibrary:static/images/elements/%s.png' % (element.weakness,))}" alt="${element.weakness}">

@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """Game reference variables that don't seem to belong anywhere else."""
+import string
 import enum
 from collections import namedtuple, OrderedDict
 
@@ -74,6 +75,8 @@ class Version(enum.IntEnum):
     falzar = 9
 
 ElementTuple = namedtuple('ElementTuple', 'name introduced weakness strength')
+chipcodes = set(list(string.ascii_uppercase) + ['*'])
+
 elements = {
     'aqua': ElementTuple('aqua', '1', 'electric', 'fire'),
     'breaking': ElementTuple('breaking', '4', 'cursor', 'sword'),

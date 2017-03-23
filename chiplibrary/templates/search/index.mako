@@ -1,88 +1,82 @@
 <%inherit file="../base.mako"/>
 <%def name="title()">Search</%def>
 
-% if not request.GET or not results: 
+<%def name="render_field(field, linebreak=True)">
+    % if linebreak:
+        <p><label for="${field.name}" title="${field.description}">${field.label.text}</label><br>${field}</p>
+    % else:
+        <p><label for="${field.name}" title="${field.description}">${field.label.text}</label></p>
+        ${field}
+    % endif
+</%def>
+
+% if not request.GET or not results:
     <h2>Advanced Search</h2>
     <div class="advanced-search">
-        <form action="${request.route_path('search_index')}" method="get">
-            <p>Using the advanced search, you can narrow your search query down further.  If you need help using the advanced search tools, you can always click the blue question marks for more information.</p>
+        <form action="${request.route_path('search')}" method="get">
+            <p>All search fields that are not filled in are ignored, and all searches are case-insensitive.</p>
 
-            <p>All searches are case-insensitive.</p>
-            
-            % for field in form:
-            <div class="description ${field.name}" title="${field.name.replace('_', ' ') | str.title}">
-                ${field.description}
-            </div>
-            % endfor
             <div class="column">
-            <h3>Essential</h3>
-            % for field in form:
-                % if field.name in ('name', 'name_jp'):
-                    <p>${field.label} <a class="help ${field.name}">Help</a> <br> ${field} </p>
-                % endif
-            % endfor
-            <h3>Game Information</h3>
-            % for field in form:
-                % if field.name in ('game', 'version'):
-                     <p>${field.label.text} <a class="help ${field.name}">Help</a></p>
-                     ${field}
-                % endif
-            % endfor
+                <h3>Essential</h3>
+                ${render_field(form.name)}
+                ${render_field(form.name_jp)}
+                <h3>Game Information</h3>
+                ${render_field(form.game, linebreak=False)}
+                ${render_field(form.version, linebreak=False)}
             </div>
-            
+
             <div class="column">
-                % for field in form:
-                    % if field.name in ('indice', 'indice_game', 'size', 'classification', 'element', 'code'):
-                    <p>${field.label.text} <a class="help ${field.name}">Help</a></p>
-                    ${field}
-                    % endif
-                % endfor
+                ${render_field(form.indice, linebreak=False)}
+                ${render_field(form.indice_game, linebreak=False)}
+                ${render_field(form.size, linebreak=False)}
+                ${render_field(form.classification, linebreak=False)}
+                ${render_field(form.element, linebreak=False)}
+                ${render_field(form.code, linebreak=False)}
             </div>
 
             <div class="column">
             <h3>Damage Control</h3>
-            % for field in form:
-                % if field.name in ('damage_min', 'damage_max', 'recovery'):
-                     <p>${field.label.text} <a class="help ${field.name}">Help</a></p>
-                     ${field}
-                % endif
-            % endfor
-            
+                <p>${form.damage_min(placeholder='Minimum')} | ${form.damage_max(placeholder='Maximum')}</p>
+                <p>${form.recovery(placeholder='Recovery')}</p>
             <h3>Other</h3>
-            % for field in form:
-                % if field.name in ('rarity'):
-                     <p>${field.label.text} <a class="help ${field.name}">Help</a></p>
-                     ${field}
-                % endif
-            % endfor
+            ${render_field(form.rarity, linebreak=False)}
             </div>
-            
+
             ${form.search_advanced}
             <div class="submit">${form.submit}</div>
         </form>
     </div>
-   
-    <h2><a name="search-syntax">Search Syntax</a></h2>
-        <p>If you're an advanced user, you may use the following search syntax if using the search bar at top of the page:</p>
+
+    <h2>Search Mechanics</h2>
+    <p>If you prefer to use the search box up top, here are a few pointers:</p>
     <div class="syntax-search">
         <dl>
-            <dt>Attribute Search</dt>
-            <dd>You can search attributes as well, which is as simple as, <span class="syntax">game:bn4</span>.  Search supports the use of multiple attributes as well, so if you wanted to search for battlechips from BN4 with a specific chip code, <span class="syntax">game:bn4 code:a</span>, or even a list of chip codes, <span class="syntax">game:bn4 code:(a d)</span>.
-            </dd>
-            
-            <dt>Search Operators</dt>
-            <dd>Search operators
+            <dt>Searchable Attributes</dt>
+            <dd>
                 <ul>
-                    <li>AND &mdash; &amp;</li>
-                    <li>OR &mdash; |</li>
-                    <li>AND NOT &mdash; &!</li>
-                    <li>AND MAYBE &mdash; &~</li>
-                    <li>NOT &mdash; -</li>
+                    <li>Names: <span class="syntax">name</span>, <span class="syntax">name_jp</span></li>
+                    <li>Indices: <span class="syntax">indice</span>, <span class="syntax">indice_game</span></li>
+                    <li>Game: <span class="syntax">game</span> (bn1, bn2, bn3, etc.)</li>
+                    <li>Version: <span class="syntax">version</span> (white, blue, redsun, bluemoon, falzar, doubleteam, etc.)</li>
+                    <li>Classification: <span class="syntax">classification</span> (standard, mega, giga, secret, dark, etc.)</li>
+                    <li>Element: <span class="syntax">element</span> aqua, null, recovery, etc. (<a href="${request.route_url('elements')}" title="Elements">elements list</a>)</li>
+                    <li>Code: <span class="syntax">code</span> A, B, C, *
+                        <ul>
+                            <li>For multiple chip codes, a comma-separated list can be used: A,B,C</li>
+                        </ul>
+                    </li>
+                    <li>Rarity: <span class="syntax">rarity</span> 1, 2, 3, 4, 5</li>
+                    <li>Size (MB): <span class="syntax">size</span> 22, 99, etc.</li>
+                    <li>Damage: <span class="syntax">damage_min</span>, <span class="syntax">damage_max</span> and <span class="syntax">recovery</span>
+                        <ul>
+                            <li>Mathematical operations are also supported.</li>
+                        </ul>
+                    </li>
                 </ul>
             </dd>
         </dl>
     </div>
-    
+
     <% return STOP_RENDERING %>
 % endif
 

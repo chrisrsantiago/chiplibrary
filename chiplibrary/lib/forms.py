@@ -2,23 +2,60 @@
 import string
 
 from wtforms import (
-    Form,
     HiddenField,
     IntegerField,
-    StringField,
     SelectField,
     SelectMultipleField,
-    SubmitField,
-    validators,
-    widgets
+    StringField
 )
-from wtforms.validators import ValidationError
+from wtforms import Form, SubmitField, validators, widgets
 
 from . import reference
+
+def form_errors(form):
+    """Collect form errors and return the error messages as a list."""
+    error_messages = []
+    for field, errors in form.errors.items():
+        for error in errors:
+            error_messages.append('%s: %s' % (
+                getattr(form, field).label.text,
+                error
+            ))
+    return error_messages
 
 class MultiCheckboxField(SelectMultipleField):
     widget = widgets.ListWidget(prefix_label=True)
     option_widget = widgets.CheckboxInput()
+        
+class ArticleForm(Form):
+    name = StringField(
+        'Name',
+        description='''The name of your article.''',
+        validators=[validators.DataRequired()]
+    )
+    description = StringField(
+        'Description',
+        description='''A brief description of the article and its
+        intentions.''',
+        validators=[validators.DataRequired()]
+    )
+    content = StringField(
+        'Content',
+        description='''The article itself.  Markdown formatting is
+        allowed.''',
+        validators=[validators.DataRequired()],
+        widget=widgets.TextArea()
+    )
+    submit = SubmitField('Submit')
+
+class CommentForm(Form):
+    comment = StringField(
+        'Comment',
+        description='''Your actual comment.''',
+        validators=[validators.DataRequired()],
+        widget=widgets.TextArea()
+    )
+    submit = SubmitField('Submit')
 
 class SearchForm(Form):
     indice = StringField(
@@ -57,7 +94,7 @@ class SearchForm(Form):
             validators.optional(),
             validators.Length(
                 min=2,
-                message='''Chip name (Japanese) must be at least %(min)d 
+                message='''Chip name (Japanese) must be at least %(min)d
                 characters.'''
             )
         ]
@@ -138,9 +175,7 @@ class SearchForm(Form):
     )
     code = MultiCheckboxField(
         'Code',
-        choices = [
-            (code, code) for code in (list(string.ascii_uppercase) + ['*'])
-        ],
+        choices=[(code, code) for code in sorted(reference.chipcodes)],
         description='Chip codes for chip, ranging from A-Z and wildcard (*).',
         validators=[validators.optional()]
     )

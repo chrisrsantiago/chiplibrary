@@ -4,17 +4,23 @@
 
 <h2>Information/Resources</h2>
 <dl>
-    <dt><a href="http://mmkb.wikia.com/" title="Mega Man Knowledge Base">MMKB</a></dt>
-    <dd>For documenting as much relevant game data as possible, and making it easy to siphon it all into this archive.  Also, for the wonderful renders used for the website's layout.  8)</dd>
+    <dt><a href="http://megaman.wikia.com/" title="Mega Man Knowledge Base">MMKB</a></dt>
+    <dd>For documenting as much relevant game data as possible, and making it easy to siphon it all into this archive.</dd>
 
+    <dt><a href="http://therockmanexezone.com/" title="The RockMan EXE Zone">The RockMan EXE Zone</a></dt>
+    <dd>For providing all of the wonderful renders used on various website imagery via the TREZ Gallery.</dd>
+    
     <dt><a href="http://sprites-inc.co.uk/" title="Sprites INC.">Sprites INC.</a></dt>
     <dd>For providing literally every single piece of in-game sprites.</dd>
 
     <dt><a href="https://megamanbattle.network/" title="Paul Anthony Webb">Paul Anthony Webb (NetOpWibby)</a></dt>
     <dd>Supporting the project and by helping spread the word.  Definitely check out his works.</dd>
     
-    <dt><a href="https://twitter.com/tterraj42" title="Tterraj42's Twitter">Tterraj42</a><br><a href="https://twitter.com/cheeseandcereal" title="cheeseandcereal's Twitter">cheeseandcereal</a></dt>
+    <dt><a href="https://twitter.com/tterraj42" title="Tterraj42's Twitter">Tterraj42</a> and <a href="https://twitter.com/cheeseandcereal" title="cheeseandcereal's Twitter">cheeseandcereal</a></dt>
     <dd>For providing additional missing information, including but not limited to: Japanese names and Game IDs via their <a href="https://docs.google.com/spreadsheets/d/18qUmXQP_w6g7Guy_fpzaCCWph17cxSetR29n5WOxXKI/pubhtml" title="MMBN Chip List">MMBN Chip List</a>.</dd>
+    
+    <dt><a href="https://www.reddit.com/r/BattleNetwork/" title="Reddit: /r/BattleNetwork">/r/BattleNetwork</a>
+    <dd>For pointing me in the right direction with certain informational accuracies and for submitting bug reports.</dd>
     
     <dt>Diomedes A. Giron</dt>
     <dd>For the wonderful right header :)</dd>
@@ -40,16 +46,4 @@
     
     <dt>Nuz</dt>
     <dd><a href="https://www.gamefaqs.com/gba/929993-mega-man-battle-network-6-cybeast-gregar/faqs/40403?print=1" title="MMBN6 Chip FAQ">MMBN6</a></dd>
-</dl>
-
-<h2>Technologies</h2>
-<dl>
-    <dt><a href="http://pylonsproject.com/" title="Pyramid Framework">Pyramid</a></dt>
-    <dd>This website is built using the Pyramid framework for Python, using SQLAlchemy, and if it wasn't for its lean and sleek design, I would probably not have been able to make so much progress in such little time.</dd>
-    
-    <dt><a href="http://scrapy.org/" title="Scrapy">Scrapy</a></dt>
-    <dd>Very useful web scraping tool that allows you to process information from websites with ease.</dd>
-    
-    <dt><a href="http://github.com/" title="Github">Github</a></dt>
-    <dd>Platform that facilitates software version control, bug tracking, etc. for developers.</dd>
 </dl>

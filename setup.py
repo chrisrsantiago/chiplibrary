@@ -1,12 +1,17 @@
 import os
+import sys
 
 from setuptools import setup, find_packages
+
+try:
+    assert sys.version_info >= (3,2)
+except AssertionError:
+    print('Python >= 3.2.x is required to run chiplibrary.')
+    sys.exit(0)
 
 here = os.path.abspath(os.path.dirname(__file__))
 with open(os.path.join(here, 'README.md')) as f:
     README = f.read()
-with open(os.path.join(here, 'CHANGES.txt')) as f:
-    CHANGES = f.read()
 
 requires = [
     'pyramid',
@@ -18,13 +23,18 @@ requires = [
     'transaction',
     'zope.sqlalchemy',
     'waitress',
+    'pyjwkest',
+    'lxml',
     'libsass',
     'mistune',
     'munch',
-    'scrapy',
     'webhelpers2',
     'whoosh',
-    'wtforms'
+    'wtforms',
+    'python-social-auth',
+    'social-auth-app-pyramid',
+    'inflect',
+    'romkan'
     ]
 
 tests_require = [
@@ -34,14 +44,14 @@ tests_require = [
     ]
 
 setup(name='chiplibrary',
-      version='1.2.1',
+      version='1.4',
       description='chiplibrary',
       long_description=README,
       classifiers=[
-          "Programming Language :: Python",
-          "Framework :: Pyramid",
-          "Topic :: Internet :: WWW/HTTP",
-          "Topic :: Internet :: WWW/HTTP :: WSGI :: Application",
+          'Programming Language :: Python',
+          'Framework :: Pyramid',
+          'Topic :: Internet :: WWW/HTTP',
+          'Topic :: Internet :: WWW/HTTP :: WSGI :: Application',
       ],
       author='Christopher Santiago',
       author_email='admin@chiplibrary.net',
@@ -58,7 +68,8 @@ setup(name='chiplibrary',
       [paste.app_factory]
       main = chiplibrary:main
       [console_scripts]
-      initialize_chiplibrary_db = chiplibrary.scripts.initializedb:main
-      initialize_chiplibrary_index = chiplibrary.scripts.index:main
+      chiplibrary_createschema = chiplibrary.scripts.createschema:main
+      chiplibrary_loadchips = chiplibrary.scripts.loadchips:main
+      chiplibrary_buildindex = chiplibrary.scripts.buildindex:main
       """,
       )

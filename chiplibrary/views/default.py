@@ -12,3 +12,7 @@ def about(request):
 @view_config(route_name='credits', renderer='../templates/credits.mako')
 def credits(request):
     return {}
+
+@view_config(route_name='development', renderer='../templates/development.mako')
+def development(request):
+    return {}

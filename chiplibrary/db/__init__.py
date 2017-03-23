@@ -1,68 +1,46 @@
 # -*- coding: utf-8 -*-
 from sqlalchemy import engine_from_config
-from sqlalchemy.orm import sessionmaker
+from sqlalchemy.orm import relationship, sessionmaker
 from sqlalchemy.orm import configure_mappers
-import zope.sqlalchemy
 
+from .user import *
 from .chip import *
+from .folder import *
+from .article import *
+
 from . import cache
+
+# Specify any relationships that couldn't otherwise be specified without all
+# models being present.
+User.folders = relationship(
+    'Folder',
+    cascade='save-update, merge, delete',
+    lazy='joined'
+)
+
+User.articles = relationship(
+    'Article',
+    cascade='save-update, merge, delete',
+    lazy='joined'
+)
 
 configure_mappers()
 
-def get_engine(settings, prefix='sqlalchemy.'):
-    return engine_from_config(settings, prefix)
-
-def get_session_factory(engine):
-    factory = sessionmaker(query_cls=cache.query_callable())
-    factory.configure(bind=engine)
-    return factory
-
-def get_tm_session(session_factory, transaction_manager):
-    """
-    Get a ``sqlalchemy.orm.Session`` instance backed by a transaction.
-
-    This function will hook the session to the transaction manager which
-    will take care of committing any changes.
-
-    - When using pyramid_tm it will automatically be committed or aborted
-      depending on whether an exception is raised.
-
-    - When using scripts you should wrap the session in a manager yourself.
-      For example::
-
-          import transaction
-
-          engine = get_engine(settings)
-          session_factory = get_session_factory(engine)
-          with transaction.manager:
-              dbsession = get_tm_session(session_factory, transaction.manager)
-
-    """
+def get_session(settings):
+    engine = engine_from_config(settings, 'sqlalchemy.')
+    session_factory = sessionmaker(
+        query_cls=cache.query_callable(),
+        expire_on_commit=False,
+        autocommit=True
+    )
+    session_factory.configure(bind=engine)
     dbsession = session_factory()
-    zope.sqlalchemy.register(
-        dbsession, transaction_manager=transaction_manager)
     return dbsession
 
-
 def includeme(config):
-    """
-    Initialize the model for a Pyramid app.
-
-    Activate this setup using ``config.include('chiplibrary.db')``.
-
-    """
+    """Initialize the model for a Pyramid app."""
     settings = config.get_settings()
-    
-    # use pyramid_tm to hook the transaction lifecycle to the request
     config.include('pyramid_tm')
-
-    session_factory = get_session_factory(get_engine(settings))
-    config.registry['dbsession_factory'] = session_factory
-
-    # make request.dbsession available for use in Pyramid
-    config.add_request_method(
-        # r.tm is the transaction manager used by pyramid_tm
-        lambda r: get_tm_session(session_factory, r.tm),
-        'dbsession',
-        reify=True
-    )
+    dbsession = get_session(settings)
+    config.registry['dbsession_factory'] = dbsession
+    config.add_request_method(lambda d: dbsession, 'dbsession', reify=True)

@@ -1,15 +1,21 @@
 <%
-    request_uri = request.environ['PATH_INFO']
+    request_uri = request.path_info
+    games = ['bn1', 'bn2', 'bn3', 'bn4', 'bn5', 'bn6']
 %>
 
-% if request_uri == request.route_path('search_index'):
-    <li><a href="${request.route_path('search_index')}">Help</a></li>
-% elif any(s in request_uri for s in ('bn1', 'bn2', 'bn3', 'bn4', 'bn5', 'bn6', 'elements')):
-    <li><a href="${request.route_path('search_index')}">Search</a></li>
-    <li><a href="${request.route_path('element_index')}" title="Elements">Elements</a></li>
+% if any(s in request_uri for s in set(games + ['element'])):
+    % for game in games:
+        % if game in request_uri:
+            <% current_game = game[2:] %>
+            <li><a href="${request.route_path('article_index', game=current_game)}" title="Articles for ${current_game | str.upper}">Articles</a></li>
+            <li><a href="${request.route_path('chip_index', game=current_game)}" title="Chips for ${current_game | str.upper}">Chips</a></li>
+            <li><a href="${request.route_path('folder_index', game=current_game)}" title="Folders for ${current_game | str.upper}">Folders</a></li>
+        % endif
+    % endfor
+    <li><a href="${request.route_path('elements')}" title="Elements">Elements</a></li>
+    <li><a href="${request.route_path('search')}" title="Search">Search</a></li>
 % else:
-    <li><a href="${request.route_path('about')}">About</a></li>
-    <li><a href="${request.route_path('credits')}">Credits</a></li>
-    <li><a href="${request.route_path('search_index')}">Search</a></li>
-    <li><a href="http://github.com/chrisrsantiago/chiplibrary">Development and Bugs</a></li>
+    <li><a href="${request.route_path('about')}" title="About">About</a></li>
+    <li><a href="${request.route_path('credits')}" title="Credits">Credits</a></li>
+    <li><a href="${request.route_path('development')}" title="Development">Development</a></li>
 % endif

@@ -4,6 +4,7 @@ import string
 from sqlalchemy import (
     Column,
     ForeignKey,
+    Index,
     Integer,
     Boolean,
     Enum,
@@ -14,7 +15,13 @@ from sqlalchemy import (
 from sqlalchemy.ext.declarative import declarative_base, declared_attr
 from sqlalchemy.orm import relationship
 
-from ..lib.reference import Element, Classification, Game, Version
+from ..lib.reference import (
+    Element,
+    Classification,
+    Game,
+    Version,
+    chipcodes
+)
 from .cache import RelationshipCache
 from .meta import metadata, Base
 
@@ -26,12 +33,6 @@ __all__ = [
 ]
 
 class Chip(Base):
-    """Battle Chips
-    
-    Since battle chips across all six games vary in just about every
-    aspect, we will separate the chip attributes into their own models, with
-    all of them referencing a id_chip (``chiplibrary.models.chip.Chip.id``).
-    """
     __tablename__ = 'chip'
     
     id = Column(Integer, primary_key=True, autoincrement=True)
@@ -134,6 +135,7 @@ class Chip(Base):
     
     __table_args__ = (
         UniqueConstraint('name', 'game', name='chip'),
+        Index('chip_index', 'indice', 'classification')
     )
     
     def __init__(self, indice=None, indice_game=None, game=None, version=None,
@@ -186,7 +188,7 @@ class _ChipBase(object):
             ForeignKey(Chip.id),
             nullable=False,
             default='',
-            doc='''See `chiplibrary.models.chip.Chip` for more information'''
+            doc='''See `chiplibrary.db.chip.Chip` for more information'''
         )
 
 ChipBase = declarative_base(metadata=metadata, cls=_ChipBase)
@@ -209,10 +211,8 @@ class ChipCode(ChipBase):
     def __init__(self, id_chip, code=None, game=None):
         # Possible chip codes: A-Z or * (wildcard symbol)
         code = code.upper()
-        CODES = list(string.ascii_uppercase)
-        CODES.append('*')
-        if not code in CODES:
-            raise Exception(
+        if not code in chipcodes:
+            raise ValueError(
                 'Invalid Chip Code: %s.  Only A-Z and * allowed.' % (code)
             )
         self.id_chip = id_chip
@@ -225,17 +225,25 @@ class ChipCode(ChipBase):
 class ChipEffects(ChipBase):
     __tablename__ = 'chip_effects'
     
-    flinch = Column(Boolean, nullable=False,
+    flinch = Column(
+        Boolean,
+        nullable=False,
         doc='''Whether chip causes flinching (flickering player visibility
         back and forth.)'''
     )
-    timestop = Column(Boolean, nullable=False,
+    timestop = Column(
+        Boolean,
+        nullable=False,
         doc='Whether chip freezes the battle temporarily (i.e. Navi chips)'
     )
-    paralyze = Column(Boolean, nullable=False,
+    paralyze = Column(
+        Boolean,
+        nullable=False,
         doc='Whether chip causes paralysis, usually from elec element chips.'
     )
-    push = Column(Boolean, nullable=False,
+    push = Column(
+        Boolean,
+        nullable=False,
         doc='Whether chip pushes the player back.'
     )
     

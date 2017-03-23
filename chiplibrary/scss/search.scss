@@ -2,12 +2,6 @@
 @import "mixins";
 @import "variables";
 
-.advanced-search .column {
-    float: left;
-    width: 29%;
-}
-
-
 .advanced-search .submit {
     clear: both;
 }
@@ -47,14 +41,6 @@
         padding: .1em;
         width: 5em;
     }
-}
-
-.advanced-search #game {
-    width: 20%;
-}
-
-.advanced-search #version {
-    width: 28%;
 }
 
 .advanced-search #classification {
@@ -193,5 +179,21 @@
         font-family: Monospace;
         font-style: italic;
         font-size: 1.1em;
+    }
+}
+
+@media all
+and (min-width: 62.31em) {
+    .advanced-search .column {
+        float: left;
+        width: 29%;
+    }
+
+    .advanced-search #game {
+        width: 20%;
+    }
+
+    .advanced-search #version {
+        width: 28%;
     }
 }

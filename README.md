@@ -13,14 +13,25 @@ Any and all bug reports should be submitted via the [https://github.com/chrisrsa
 
 Requirements
 ---------------
-- Python >=3.2
+- Python >= 3.2
 - pyramid
+- pyramid_dogpile_cache2
 - sqlalchemy
 - mako
+- whoosh
 - webhelpers2
-- mistune (markdown parser used for chip summary sections)
-- libsass (optional: if you wish to edit and compile the CSS)
-- virtualenv (optional: if you want to setup your own environment)
+- python-social-auth
+- wtforms
+- inflect
+- munch
+- mistune (markdown parser used for chip summaries and articles)
+- Sass (optional: if you wish to edit and compile the CSS)
+- virtualenv (optional: if you want to setup your own Python development environment)
+
+
+Using Sass/SCSS
+---------------
+chiplibrary uses Sass for its stylesheets.  By default, the stylesheets are already compiled to CSS, and ready to use, so it is not necessary.  All relevant stylesheets can be found in the `chiplibrary/scss` directory.  You may compile the stylesheets using whichever Sass compiler you wish.
 
 Setup
 ---------------
@@ -39,22 +50,20 @@ Run the setup to install all dependencies and setup the `chiplibrary` package.  
 
 `$VENV/bin/python3 setup.py develop`
 
-Assuming that was a success, it's time to populate the database with data.  Using your chips.xml dump with the `initialize_chiplibrary_db` script:
+Create your schema.  This will delete any already existing data:
 
-`$VENV/bin/initialize_chiplibrary_db /path/to/your/chips.xml config.ini`
+`$VENV/bin/chiplibrary_createschema config.ini`
 
-After the data has been populated successfully, it's time to build the search engine indexes to allow for the search feature to work.  Simply run the `initialize_chiplibrary_index`, keeping in mind to supply your config:
+Assuming that was a success, it's time to populate the database with data.  Using your chips.xml dump with the `chiplibrary_loadchips` script:
 
-`$VENV/bin/initialize_chiplibrary_index config.ini`
+`$VENV/bin/chiplibrary_loadchips config.ini /path/to/your/chips.xml`
 
-Once that's done, you should be good to go, and you can run the server.  Deployment options are solely up to you:
+After the data has been populated successfully, it's time to build the search engine index to allow for the search feature to work:
+
+`$VENV/bin/chiplibrary_buildindex config.ini`
+
+Once that's done, you should be good to go, and you can run the server.  However you want to deploy is up to you, but for your own purposes this will suffice:
 
 `$VENV/bin/pserve config.ini`
 
 Enjoy!
-
-Using Sass/SCSS
----------------
-chiplibrary uses Sass for its stylesheets.  You can compile the stylesheets using whichever compiler you'd like, but if you prefer to use Python:
-
-`rm -rf static/css; $VENV/bin/python3 -c "import sass; sass.compile(dirname=['scss', 'static/css'])"`
